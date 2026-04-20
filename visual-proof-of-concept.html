@@ -1,0 +1,277 @@
+
+<h2 class="sr-only">Interactive explorer of the RNG Meter's sweet spot mathematics — shows efficiency curve, survival S(L), and boosted odds p(L) for different parameters.</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.lbl{font-size:13px;color:var(--color-text-secondary);min-width:160px}
+.val{font-size:13px;font-weight:500;min-width:52px;text-align:right;color:var(--color-text-primary)}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px}
+.stat-l{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
+.stat-v{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.stat-s{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
+.stat.best{background:var(--color-background-success);border:0.5px solid var(--color-border-success)}
+.stat.best .stat-v{color:var(--color-text-success)}
+.chart-wrap{position:relative;width:100%;height:200px;margin-bottom:1rem}
+.sep{height:0.5px;background:var(--color-border-tertiary);margin:1rem 0}
+.leg{display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+.leg span{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary)}
+.leg i{display:inline-block;width:24px;height:3px;border-radius:1px}
+.section-lbl{font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.75rem}
+.inline-eq{font-size:12px;font-family:var(--font-mono);background:var(--color-background-secondary);padding:6px 10px;border-radius:var(--border-radius-md);color:var(--color-text-secondary);line-height:1.7;margin-bottom:8px}
+.highlight{color:var(--color-text-primary);font-weight:500}
+</style>
+
+<div class="wrap">
+  <div class="section-lbl">Parameters of the model</div>
+
+  <div class="row">
+    <span class="lbl">Base chance p (%)</span>
+    <input type="range" id="sl-p" min="0.02" max="5" step="0.01" value="0.5" style="flex:1">
+    <span class="val" id="v-p">0.50%</span>
+  </div>
+  <div class="row">
+    <span class="lbl">XP per run</span>
+    <input type="range" id="sl-xpr" min="100" max="2000" step="25" value="625" style="flex:1">
+    <span class="val" id="v-xpr">625</span>
+  </div>
+  <div class="row">
+    <span class="lbl">Magic Find</span>
+    <input type="range" id="sl-mf" min="0" max="500" step="5" value="100" style="flex:1">
+    <span class="val" id="v-mf">100</span>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="section-lbl">Calculated Results</div>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-l">Required XP</div>
+      <div class="stat-v" id="s-req">—</div>
+      <div class="stat-s">for pity</div>
+    </div>
+    <div class="stat">
+      <div class="stat-l">Runs until pity (m)</div>
+      <div class="stat-v" id="s-m">—</div>
+      <div class="stat-s">comprimento do ciclo</div>
+    </div>
+    <div class="stat best">
+      <div class="stat-l">Sweet spot L*</div>
+      <div class="stat-v" id="s-lstar">—</div>
+      <div class="stat-s" id="s-lpct">—% do meter</div>
+    </div>
+    <div class="stat best">
+      <div class="stat-l">Gain vs Baseline</div>
+      <div class="stat-v" id="s-gain">—</div>
+      <div class="stat-s">meter always off</div>
+    </div>
+  </div>
+
+  <div class="section-lbl">Efficiency curve — Eff(L) = expected drops/runs</div>
+  <div class="leg">
+    <span><i style="background:#1D9E75"></i>Eff(L) — the smaller the "1 in N", the better.</span>
+    <span><i style="background:#E24B4A;height:2px;border-radius:0"></i>Sweet spot L*</span>
+    <span><i style="background:#888780;border-top:2px dashed #888780;height:0"></i>Baseline (L=0)</span>
+  </div>
+  <div class="chart-wrap"><canvas id="c-eff" role="img" aria-label="Efficiency curve Eff(L) showing the optimum sweet spot">RNG Meter efficiency curve.</canvas></div>
+
+  <div class="section-lbl">Internal components — S(L) and (L)</div>
+  <div class="leg">
+    <span><i style="background:#185FA5"></i>S(L) — probability of survival (has not yet dropped)</span>
+    <span><i style="background:#BA7517"></i>p(L) — boosted chance in run L</span>
+  </div>
+  <div class="chart-wrap"><canvas id="c-comp" role="img" aria-label="Graph showing S(L) probability of survival and p(L) boosted odds.">Internal components S(L) and p(L).</canvas></div>
+
+  <div class="sep"></div>
+
+  <div class="section-lbl">Conditional margin to stop</div>
+  <div class="inline-eq" id="eq-box">
+    Carregando...
+  </div>
+  <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7" id="interp-box">—</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let cEff = null, cComp = null;
+
+function compute() {
+  const pBase = parseFloat(document.getElementById('sl-p').value) / 100;
+  const xprRaw = parseFloat(document.getElementById('sl-xpr').value);
+  const mf = parseFloat(document.getElementById('sl-mf').value);
+
+  const pMF = pBase < 0.05 ? pBase * (1 + mf/100) : pBase;
+  const reqXp = Math.floor(50000 / (pBase * 100));
+  const m = Math.ceil(reqXp / xprRaw);
+
+  const w = pBase;
+  const W = 1 - pBase;
+
+  const effArr = [], sArr = [], pArr = [], lArr = [];
+  let S = 1.0, sumS = 0.0;
+  let bestL = 0, maxEff = -Infinity;
+  let baselineEff = 0;
+
+  const maxL = Math.min(m, 800);
+
+  for (let L = 0; L <= maxL; L++) {
+    const N = 1 + S * (m - L) * pMF;
+    const D = sumS + S * (m - L + 1);
+    const eff = D > 0 ? N / D : 0;
+
+    effArr.push(parseFloat((1/eff).toFixed(2)));
+    sArr.push(parseFloat((S * 100).toFixed(2)));
+    lArr.push(L);
+
+    if (L === 0) baselineEff = eff;
+    if (eff > maxEff) { maxEff = eff; bestL = L; }
+
+    if (L < maxL) {
+      const storedXp = L * xprRaw;
+      const mult = 1 + Math.min(2 * storedXp / reqXp, 2);
+      const wL = w * mult;
+      const pL = wL / (W + wL);
+      pArr.push(parseFloat((pL * 100).toFixed(4)));
+      sumS += S;
+      S *= (1 - pL);
+    } else {
+      pArr.push(parseFloat((pMF * 100 * 3).toFixed(4)));
+    }
+  }
+
+  const gain = ((maxEff / baselineEff) - 1) * 100;
+  const bestPct = (bestL / m * 100);
+
+  document.getElementById('s-req').textContent = reqXp.toLocaleString();
+  document.getElementById('s-m').textContent = m.toLocaleString();
+  document.getElementById('s-lstar').textContent = bestL.toLocaleString() + ' runs';
+  document.getElementById('s-lpct').textContent = bestPct.toFixed(1) + '% do meter';
+  document.getElementById('s-gain').textContent = '+' + gain.toFixed(2) + '%';
+
+  const storedAtBest = bestL * xprRaw;
+  const multAtBest = 1 + Math.min(2 * storedAtBest / reqXp, 2);
+  const pLstar = (w * multAtBest) / (W + w * multAtBest) * 100;
+  const SLstar = sArr[bestL] / 100;
+  const remainRuns = m - bestL;
+
+  document.getElementById('eq-box').innerHTML =
+    `<span class="highlight">L* = ${bestL}</span> &nbsp;|&nbsp; ` +
+    `S(L*) = <span class="highlight">${(SLstar*100).toFixed(2)}%</span> &nbsp;|&nbsp; ` +
+    `p(L*) = <span class="highlight">${pLstar.toFixed(4)}%</span> &nbsp;|&nbsp; ` +
+    `m − L* = <span class="highlight">${remainRuns} runs</span> restantes na fase OFF\n\n` +
+    `Eff(L*) = [ 1 + S(L*)·(m−L*)·p ] / [ sumS + S(L*)·(m−L*+1) ]\n` +
+    `        = [ 1 + ${SLstar.toFixed(3)}·${remainRuns}·${(pMF*100).toFixed(4)}% ] / [ ... ]\n` +
+    `        = 1 em ${(1/maxEff).toFixed(1)} runs`;
+
+  document.getElementById('interp-box').innerHTML =
+    bestL === 0
+      ? `With p=${(pBase*100).toFixed(2)}% and XP/run=${xprRaw}, the meter fills up in just ${m} runs. The warranty pity dominates — turning on the meter only risks resetting it before the warranty expires without compensation. Strategy: never turn it on, let it accumulate and use the warranty.`
+      : `The meter is worth it when <strong style="color:var(--color-text-primary)">${bestPct.toFixed(0)}% (${bestL} runs)</strong>. At this point S(L*)=${(SLstar*100).toFixed(1)}% — there are still ${(SLstar*100).toFixed(0)}% chance of not having dropped. The p(L*) boost= ${pLstar.toFixed(3)}% The risk of resetting is worthwhile up to this point, but from this point on, each run with the meter enabled has a higher expected cost (risk of resetting progress) than the marginal chance gain.`;
+
+  drawCharts(lArr, effArr, sArr, pArr, bestL, baselineEff, m);
+}
+
+function drawCharts(lArr, effArr, sArr, pArr, bestL, baselineEff, m) {
+  const baselineVal = parseFloat((1/baselineEff).toFixed(2));
+  const bpColors = lArr.map(l => l === bestL ? '#E24B4A' : '#1D9E75');
+  const bpRadius = lArr.map(l => l === bestL ? 5 : 0);
+
+  if (cEff) cEff.destroy();
+  cEff = new Chart(document.getElementById('c-eff').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: lArr,
+      datasets: [
+        {
+          label: '1 in N runs',
+          data: effArr,
+          borderColor: '#1D9E75',
+          backgroundColor: 'rgba(29,158,117,0.07)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.35,
+          pointRadius: bpRadius,
+          pointBackgroundColor: bpColors,
+          pointBorderColor: bpColors
+        },
+        {
+          label: 'Baseline',
+          data: lArr.map(() => baselineVal),
+          borderColor: '#888780',
+          borderDash: [5,4],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `1 em ${ctx.parsed.y} runs | L=${ctx.label} (${(ctx.label/m*100).toFixed(0)}%)` } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'L (runs with meter ON)', color: '#888780', font: { size: 11 } }, ticks: { maxTicksLimit: 8, color: '#888780' }, grid: { color: 'rgba(136,135,128,0.12)' } },
+        y: { title: { display: true, text: '1 in N (smaller = better)', color: '#888780', font: { size: 11 } }, ticks: { color: '#888780' }, grid: { color: 'rgba(136,135,128,0.12)' } }
+      }
+    }
+  });
+
+  if (cComp) cComp.destroy();
+  cComp = new Chart(document.getElementById('c-comp').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: lArr,
+      datasets: [
+        {
+          label: 'S(L) %',
+          data: sArr,
+          borderColor: '#185FA5',
+          backgroundColor: 'rgba(24,95,165,0.07)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.35,
+          pointRadius: 0,
+          yAxisID: 'yS'
+        },
+        {
+          label: 'p(L) %',
+          data: pArr,
+          borderColor: '#BA7517',
+          borderWidth: 2,
+          tension: 0.35,
+          pointRadius: 0,
+          fill: false,
+          yAxisID: 'yP'
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(3) + '%' } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'L', color: '#888780', font: { size: 11 } }, ticks: { maxTicksLimit: 8, color: '#888780' }, grid: { color: 'rgba(136,135,128,0.12)' } },
+        yS: { type: 'linear', position: 'left', title: { display: true, text: 'S(L) — survivability %', color: '#185FA5', font: { size: 10 } }, ticks: { color: '#888780' }, grid: { color: 'rgba(136,135,128,0.12)' } },
+        yP: { type: 'linear', position: 'right', title: { display: true, text: 'p(L) — boosted chacne %', color: '#BA7517', font: { size: 10 } }, ticks: { color: '#888780' }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+}
+
+['sl-p','sl-xpr','sl-mf'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    const v = parseFloat(el.value);
+    if (id === 'sl-p') document.getElementById('v-p').textContent = v.toFixed(2) + '%';
+    if (id === 'sl-xpr') document.getElementById('v-xpr').textContent = v.toFixed(0);
+    if (id === 'sl-mf') document.getElementById('v-mf').textContent = v.toFixed(0);
+    compute();
+  });
+});
+
+compute();
+</script>
