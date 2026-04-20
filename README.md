@@ -20,9 +20,9 @@ A mathematically rigorous drop-rate calculator and RNG Meter strategy optimizer 
 
 ---
 
-## Live Demo
+## Live tests and proof with visual PoC
 
-Open `calculadora.html` directly in your browser — no server, no install, no build step needed.
+Open `calculator.html` for tests or `visual-proof-of-concept.html` directly in your browser — no server, no install, no build step needed.
 
 ```
 # Clone the repo
@@ -30,9 +30,13 @@ git clone https://github.com/your-username/skyblock-rng-optimizer.git
 cd skyblock-rng-optimizer
 
 # Open in browser (any OS)
-open calculadora.html          # macOS
-xdg-open calculadora.html      # Linux
-start calculadora.html         # Windows
+open calculator.html          # macOS
+xdg-open calculator.html      # Linux
+start calculator.html         # Windows
+# Open in browser (any OS)
+open visual-proof-of-concept.html          # macOS
+xdg-open visual-proof-of-concept.html      # Linux
+start visual-proof-of-concept.html         # Windows
 ```
 
 ---
