@@ -1,659 +1,680 @@
-
-<h2 class="sr-only">RNG Meter calculator and optimizer for Hypixel SkyBlock Slayers</h2>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); }
-.wrap { padding: 1rem 0; max-width: 680px; }
-.section { margin-bottom: 1.5rem; }
-.section-title { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
-.metric-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; }
-.metric-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
-.metric-value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
-.metric-sub { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
-.highlight-card { background: var(--color-background-success); border: 0.5px solid var(--color-border-success); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
-.highlight-card .metric-value { color: var(--color-text-success); }
-.warn-card { background: var(--color-background-warning); border: 0.5px solid var(--color-border-warning); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
-.warn-card .metric-value { color: var(--color-text-warning); }
-.field-group { display: flex; flex-direction: column; gap: 6px; }
-.field-label { font-size: 13px; color: var(--color-text-secondary); }
-select, input[type=number], input[type=text] { width: 100%; font-size: 14px; }
-.slider-row { display: flex; align-items: center; gap: 10px; }
-.slider-row input[type=range] { flex: 1; }
-.slider-val { font-size: 14px; font-weight: 500; min-width: 38px; text-align: right; color: var(--color-text-primary); }
-.drop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.drop-btn { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 12px; cursor: pointer; text-align: left; transition: border-color 0.15s; }
-.drop-btn:hover { border-color: var(--color-border-secondary); }
-.drop-btn.active { border: 1.5px solid #1D9E75; background: var(--color-background-success); }
-.drop-btn .drop-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
-.drop-btn .drop-chance { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
-.drop-btn .drop-pool { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
-.pool-main { color: #185FA5; }
-.pool-extra { color: #BA7517; }
-.pool-token { color: #993556; }
-.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1rem 0; }
-.badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); }
-.badge-green { background: #E1F5EE; color: #0F6E56; }
-.badge-blue { background: #E6F1FB; color: #185FA5; }
-.badge-amber { background: #FAEEDA; color: #854F0B; }
-.badge-red { background: #FCEBEB; color: #A32D2D; }
-.chart-wrap { position: relative; width: 100%; height: 220px; margin-top: 1rem; }
-.advice-box { border-left: 3px solid #1D9E75; padding: 0.75rem 1rem; background: var(--color-background-secondary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; }
-.advice-box p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
-.advice-box strong { color: var(--color-text-primary); font-weight: 500; }
-.tab-row { display: flex; gap: 4px; margin-bottom: 1rem; }
-.tab { font-size: 13px; padding: 6px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); cursor: pointer; color: var(--color-text-secondary); background: transparent; }
-.tab.active { background: var(--color-background-primary); border-color: var(--color-border-primary); color: var(--color-text-primary); font-weight: 500; }
-.progress-bar-wrap { height: 8px; background: var(--color-background-secondary); border-radius: 4px; overflow: hidden; margin-top: 6px; }
-.progress-bar { height: 100%; border-radius: 4px; transition: width 0.3s; }
+<html>
+<head>
+<title>calculator.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bababa;}
+.s2 { color: #6aab73;}
+.s3 { color: #bcbec4;}
+.s4 { color: #2aacb8;}
+.s5 { color: #56a8f5;}
+.s6 { color: #cf8e6d;}
 </style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+calculator.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;h2 </span><span class="s1">class</span><span class="s2">=&quot;sr-only&quot;</span><span class="s0">&gt;</span><span class="s3">RNG Meter calculator and optimizer for Hypixel SkyBlock Slayers</span><span class="s0">&lt;/h2&gt;</span>
+<span class="s0">&lt;style&gt;</span>
+<span class="s0">* </span><span class="s3">{ </span><span class="s1">box-sizing</span><span class="s3">: </span><span class="s2">border-box</span><span class="s3">; </span><span class="s1">margin</span><span class="s3">: </span><span class="s4">0</span><span class="s3">; </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">0</span><span class="s3">; }</span>
+<span class="s0">body </span><span class="s3">{ </span><span class="s1">font-family</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--font-sans</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">wrap </span><span class="s3">{ </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem </span><span class="s4">0</span><span class="s3">; </span><span class="s1">max-width</span><span class="s3">: </span><span class="s4">680</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">section </span><span class="s3">{ </span><span class="s1">margin-bottom</span><span class="s3">: </span><span class="s4">1.5</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">section-title </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">11</span><span class="s2">px</span><span class="s3">; </span><span class="s1">font-weight</span><span class="s3">: </span><span class="s4">500</span><span class="s3">; </span><span class="s1">letter-spacing</span><span class="s3">: </span><span class="s4">0.08</span><span class="s2">em</span><span class="s3">; </span><span class="s1">text-transform</span><span class="s3">: </span><span class="s2">uppercase</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-tertiary</span><span class="s3">); </span><span class="s1">margin-bottom</span><span class="s3">: </span><span class="s4">0.75</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">grid2 </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">grid</span><span class="s3">; </span><span class="s1">grid-template-columns</span><span class="s3">: </span><span class="s4">1</span><span class="s2">fr </span><span class="s4">1</span><span class="s2">fr</span><span class="s3">; </span><span class="s1">gap</span><span class="s3">: </span><span class="s4">12</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">grid3 </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">grid</span><span class="s3">; </span><span class="s1">grid-template-columns</span><span class="s3">: </span><span class="s4">1</span><span class="s2">fr </span><span class="s4">1</span><span class="s2">fr </span><span class="s4">1</span><span class="s2">fr</span><span class="s3">; </span><span class="s1">gap</span><span class="s3">: </span><span class="s4">12</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">grid4 </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">grid</span><span class="s3">; </span><span class="s1">grid-template-columns</span><span class="s3">: </span><span class="s0">repeat</span><span class="s3">(</span><span class="s4">4</span><span class="s3">, </span><span class="s4">1</span><span class="s2">fr</span><span class="s3">); </span><span class="s1">gap</span><span class="s3">: </span><span class="s4">12</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">card </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-primary</span><span class="s3">); </span><span class="s1">border</span><span class="s3">: </span><span class="s4">0.5</span><span class="s2">px solid </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-tertiary</span><span class="s3">); </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-lg</span><span class="s3">); </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem </span><span class="s4">1.25</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">metric-card </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-secondary</span><span class="s3">); </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-md</span><span class="s3">); </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">metric-label </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">12</span><span class="s2">px</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-secondary</span><span class="s3">); </span><span class="s1">margin-bottom</span><span class="s3">: </span><span class="s4">4</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">metric-value </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">22</span><span class="s2">px</span><span class="s3">; </span><span class="s1">font-weight</span><span class="s3">: </span><span class="s4">500</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-primary</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">metric-sub </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">12</span><span class="s2">px</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-tertiary</span><span class="s3">); </span><span class="s1">margin-top</span><span class="s3">: </span><span class="s4">2</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">highlight-card </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-success</span><span class="s3">); </span><span class="s1">border</span><span class="s3">: </span><span class="s4">0.5</span><span class="s2">px solid </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-success</span><span class="s3">); </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-lg</span><span class="s3">); </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem </span><span class="s4">1.25</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">highlight-card </span><span class="s3">.</span><span class="s0">metric-value </span><span class="s3">{ </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-success</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">warn-card </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-warning</span><span class="s3">); </span><span class="s1">border</span><span class="s3">: </span><span class="s4">0.5</span><span class="s2">px solid </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-warning</span><span class="s3">); </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-lg</span><span class="s3">); </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem </span><span class="s4">1.25</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">warn-card </span><span class="s3">.</span><span class="s0">metric-value </span><span class="s3">{ </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-warning</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">field-group </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">flex</span><span class="s3">; </span><span class="s1">flex-direction</span><span class="s3">: </span><span class="s2">column</span><span class="s3">; </span><span class="s1">gap</span><span class="s3">: </span><span class="s4">6</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">field-label </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">13</span><span class="s2">px</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-secondary</span><span class="s3">); }</span>
+<span class="s0">select</span><span class="s3">, </span><span class="s0">input</span><span class="s3">[</span><span class="s0">type</span><span class="s3">=</span><span class="s0">number</span><span class="s3">], </span><span class="s0">input</span><span class="s3">[</span><span class="s0">type</span><span class="s3">=</span><span class="s0">text</span><span class="s3">] { </span><span class="s1">width</span><span class="s3">: </span><span class="s4">100</span><span class="s3">%; </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">14</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">slider-row </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">flex</span><span class="s3">; </span><span class="s1">align-items</span><span class="s3">: </span><span class="s2">center</span><span class="s3">; </span><span class="s1">gap</span><span class="s3">: </span><span class="s4">10</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">slider-row input</span><span class="s3">[</span><span class="s0">type</span><span class="s3">=</span><span class="s0">range</span><span class="s3">] { </span><span class="s1">flex</span><span class="s3">: </span><span class="s4">1</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">slider-val </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">14</span><span class="s2">px</span><span class="s3">; </span><span class="s1">font-weight</span><span class="s3">: </span><span class="s4">500</span><span class="s3">; </span><span class="s1">min-width</span><span class="s3">: </span><span class="s4">38</span><span class="s2">px</span><span class="s3">; </span><span class="s1">text-align</span><span class="s3">: </span><span class="s2">right</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-primary</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">drop-grid </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">grid</span><span class="s3">; </span><span class="s1">grid-template-columns</span><span class="s3">: </span><span class="s4">1</span><span class="s2">fr </span><span class="s4">1</span><span class="s2">fr</span><span class="s3">; </span><span class="s1">gap</span><span class="s3">: </span><span class="s4">8</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">drop-btn </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-secondary</span><span class="s3">); </span><span class="s1">border</span><span class="s3">: </span><span class="s4">0.5</span><span class="s2">px solid </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-tertiary</span><span class="s3">); </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-md</span><span class="s3">); </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">10</span><span class="s2">px </span><span class="s4">12</span><span class="s2">px</span><span class="s3">; </span><span class="s1">cursor</span><span class="s3">: </span><span class="s2">pointer</span><span class="s3">; </span><span class="s1">text-align</span><span class="s3">: </span><span class="s2">left</span><span class="s3">; </span><span class="s1">transition</span><span class="s3">: </span><span class="s2">border-color </span><span class="s4">0.15</span><span class="s2">s</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">drop-btn</span><span class="s3">:</span><span class="s0">hover </span><span class="s3">{ </span><span class="s1">border-color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-secondary</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">drop-btn</span><span class="s3">.</span><span class="s0">active </span><span class="s3">{ </span><span class="s1">border</span><span class="s3">: </span><span class="s4">1.5</span><span class="s2">px solid </span><span class="s5">#1D9E75</span><span class="s3">; </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-success</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">drop-btn </span><span class="s3">.</span><span class="s0">drop-name </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">13</span><span class="s2">px</span><span class="s3">; </span><span class="s1">font-weight</span><span class="s3">: </span><span class="s4">500</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-primary</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">drop-btn </span><span class="s3">.</span><span class="s0">drop-chance </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">11</span><span class="s2">px</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-secondary</span><span class="s3">); </span><span class="s1">margin-top</span><span class="s3">: </span><span class="s4">2</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">drop-btn </span><span class="s3">.</span><span class="s0">drop-pool </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">10</span><span class="s2">px</span><span class="s3">; </span><span class="s1">letter-spacing</span><span class="s3">: </span><span class="s4">0.05</span><span class="s2">em</span><span class="s3">; </span><span class="s1">text-transform</span><span class="s3">: </span><span class="s2">uppercase</span><span class="s3">; </span><span class="s1">margin-top</span><span class="s3">: </span><span class="s4">2</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">pool-main </span><span class="s3">{ </span><span class="s1">color</span><span class="s3">: </span><span class="s5">#185FA5</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">pool-extra </span><span class="s3">{ </span><span class="s1">color</span><span class="s3">: </span><span class="s5">#BA7517</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">pool-token </span><span class="s3">{ </span><span class="s1">color</span><span class="s3">: </span><span class="s5">#993556</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">divider </span><span class="s3">{ </span><span class="s1">height</span><span class="s3">: </span><span class="s4">0.5</span><span class="s2">px</span><span class="s3">; </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-tertiary</span><span class="s3">); </span><span class="s1">margin</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem </span><span class="s4">0</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">badge </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">inline-block</span><span class="s3">; </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">11</span><span class="s2">px</span><span class="s3">; </span><span class="s1">font-weight</span><span class="s3">: </span><span class="s4">500</span><span class="s3">; </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">2</span><span class="s2">px </span><span class="s4">8</span><span class="s2">px</span><span class="s3">; </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-md</span><span class="s3">); }</span>
+<span class="s3">.</span><span class="s0">badge-green </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s5">#E1F5EE</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s5">#0F6E56</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">badge-blue </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s5">#E6F1FB</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s5">#185FA5</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">badge-amber </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s5">#FAEEDA</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s5">#854F0B</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">badge-red </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s5">#FCEBEB</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s5">#A32D2D</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">chart-wrap </span><span class="s3">{ </span><span class="s1">position</span><span class="s3">: </span><span class="s2">relative</span><span class="s3">; </span><span class="s1">width</span><span class="s3">: </span><span class="s4">100</span><span class="s3">%; </span><span class="s1">height</span><span class="s3">: </span><span class="s4">220</span><span class="s2">px</span><span class="s3">; </span><span class="s1">margin-top</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">advice-box </span><span class="s3">{ </span><span class="s1">border-left</span><span class="s3">: </span><span class="s4">3</span><span class="s2">px solid </span><span class="s5">#1D9E75</span><span class="s3">; </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">0.75</span><span class="s2">rem </span><span class="s4">1</span><span class="s2">rem</span><span class="s3">; </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-secondary</span><span class="s3">); </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s4">0 </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-md</span><span class="s3">) </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-md</span><span class="s3">) </span><span class="s4">0</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">advice-box p </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">13</span><span class="s2">px</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-secondary</span><span class="s3">); </span><span class="s1">line-height</span><span class="s3">: </span><span class="s4">1.6</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">advice-box strong </span><span class="s3">{ </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-primary</span><span class="s3">); </span><span class="s1">font-weight</span><span class="s3">: </span><span class="s4">500</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">tab-row </span><span class="s3">{ </span><span class="s1">display</span><span class="s3">: </span><span class="s2">flex</span><span class="s3">; </span><span class="s1">gap</span><span class="s3">: </span><span class="s4">4</span><span class="s2">px</span><span class="s3">; </span><span class="s1">margin-bottom</span><span class="s3">: </span><span class="s4">1</span><span class="s2">rem</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">tab </span><span class="s3">{ </span><span class="s1">font-size</span><span class="s3">: </span><span class="s4">13</span><span class="s2">px</span><span class="s3">; </span><span class="s1">padding</span><span class="s3">: </span><span class="s4">6</span><span class="s2">px </span><span class="s4">14</span><span class="s2">px</span><span class="s3">; </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--border-radius-md</span><span class="s3">); </span><span class="s1">border</span><span class="s3">: </span><span class="s4">0.5</span><span class="s2">px solid </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-tertiary</span><span class="s3">); </span><span class="s1">cursor</span><span class="s3">: </span><span class="s2">pointer</span><span class="s3">; </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-secondary</span><span class="s3">); </span><span class="s1">background</span><span class="s3">: </span><span class="s2">transparent</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">tab</span><span class="s3">.</span><span class="s0">active </span><span class="s3">{ </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-primary</span><span class="s3">); </span><span class="s1">border-color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-border-primary</span><span class="s3">); </span><span class="s1">color</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-primary</span><span class="s3">); </span><span class="s1">font-weight</span><span class="s3">: </span><span class="s4">500</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">progress-bar-wrap </span><span class="s3">{ </span><span class="s1">height</span><span class="s3">: </span><span class="s4">8</span><span class="s2">px</span><span class="s3">; </span><span class="s1">background</span><span class="s3">: </span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-background-secondary</span><span class="s3">); </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s4">4</span><span class="s2">px</span><span class="s3">; </span><span class="s1">overflow</span><span class="s3">: </span><span class="s2">hidden</span><span class="s3">; </span><span class="s1">margin-top</span><span class="s3">: </span><span class="s4">6</span><span class="s2">px</span><span class="s3">; }</span>
+<span class="s3">.</span><span class="s0">progress-bar </span><span class="s3">{ </span><span class="s1">height</span><span class="s3">: </span><span class="s4">100</span><span class="s3">%; </span><span class="s1">border-radius</span><span class="s3">: </span><span class="s4">4</span><span class="s2">px</span><span class="s3">; </span><span class="s1">transition</span><span class="s3">: </span><span class="s2">width </span><span class="s4">0.3</span><span class="s2">s</span><span class="s3">; }</span>
+<span class="s0">&lt;/style&gt;</span>
 
-<div class="wrap">
-  <div class="section">
-    <div class="section-title">Boss & Target</div>
-    <div class="grid2" style="margin-bottom:12px">
-      <div class="field-group">
-        <span class="field-label">Slayer Type</span>
-        <select id="sel-activity"></select>
-      </div>
-      <div class="field-group">
-        <span class="field-label">Boss / Tier</span>
-        <select id="sel-boss"></select>
-      </div>
-    </div>
-    <div class="section-title" style="margin-bottom:0.5rem">Select target drop</div>
-    <div class="drop-grid" id="drop-grid"></div>
-  </div>
+<span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;wrap&quot;</span><span class="s0">&gt;</span>
+  <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section-title&quot;</span><span class="s0">&gt;</span><span class="s3">Boss &amp; Target</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;grid2&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-bottom</span><span class="s3">:</span><span class="s4">12</span><span class="s2">px&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;field-group&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;field-label&quot;</span><span class="s0">&gt;</span><span class="s3">Slayer Type</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;select </span><span class="s1">id</span><span class="s2">=&quot;sel-activity&quot;</span><span class="s0">&gt;&lt;/select&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;field-group&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;field-label&quot;</span><span class="s0">&gt;</span><span class="s3">Boss / Tier</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;select </span><span class="s1">id</span><span class="s2">=&quot;sel-boss&quot;</span><span class="s0">&gt;&lt;/select&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section-title&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-bottom</span><span class="s3">:</span><span class="s4">0.5</span><span class="s2">rem&quot;</span><span class="s0">&gt;</span><span class="s3">Select target drop</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;drop-grid&quot; </span><span class="s1">id</span><span class="s2">=&quot;drop-grid&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+  <span class="s0">&lt;/div&gt;</span>
 
-  <div class="divider"></div>
+  <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;divider&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
 
-  <div class="section">
-    <div class="section-title">Your Stats</div>
-    <div class="grid2" style="margin-bottom:12px">
-      <div class="field-group">
-        <span class="field-label">Magic Find</span>
-        <div class="slider-row">
-          <input type="range" id="sl-mf" min="0" max="500" value="100" step="1">
-          <span class="slider-val" id="val-mf">100</span>
-        </div>
-      </div>
-      <div class="field-group">
-        <span class="field-label">Pity Attribute Level (0–10)</span>
-        <div class="slider-row">
-          <input type="range" id="sl-pity" min="0" max="10" value="0" step="1">
-          <span class="slider-val" id="val-pity">0</span>
-        </div>
-      </div>
-    </div>
-    <div class="field-group">
-      <span class="field-label">Aatrox XP Buff active?</span>
-      <div style="display:flex; gap:8px; margin-top:4px">
-        <button class="drop-btn" id="btn-aatrox-no" style="flex:1" onclick="setAatrox(false)">
-          <span class="drop-name">No</span>
-        </button>
-        <button class="drop-btn active" id="btn-aatrox-yes" style="flex:1" onclick="setAatrox(true)">
-          <span class="drop-name">Yes (+25% XP)</span>
-        </button>
-      </div>
-    </div>
-  </div>
+  <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section-title&quot;</span><span class="s0">&gt;</span><span class="s3">Your Stats</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;grid2&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-bottom</span><span class="s3">:</span><span class="s4">12</span><span class="s2">px&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;field-group&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;field-label&quot;</span><span class="s0">&gt;</span><span class="s3">Magic Find</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;slider-row&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;input </span><span class="s1">type</span><span class="s2">=&quot;range&quot; </span><span class="s1">id</span><span class="s2">=&quot;sl-mf&quot; </span><span class="s1">min</span><span class="s2">=&quot;0&quot; </span><span class="s1">max</span><span class="s2">=&quot;500&quot; </span><span class="s1">value</span><span class="s2">=&quot;100&quot; </span><span class="s1">step</span><span class="s2">=&quot;1&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;slider-val&quot; </span><span class="s1">id</span><span class="s2">=&quot;val-mf&quot;</span><span class="s0">&gt;</span><span class="s3">100</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;field-group&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;field-label&quot;</span><span class="s0">&gt;</span><span class="s3">Pity Attribute Level (0–10)</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;slider-row&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;input </span><span class="s1">type</span><span class="s2">=&quot;range&quot; </span><span class="s1">id</span><span class="s2">=&quot;sl-pity&quot; </span><span class="s1">min</span><span class="s2">=&quot;0&quot; </span><span class="s1">max</span><span class="s2">=&quot;10&quot; </span><span class="s1">value</span><span class="s2">=&quot;0&quot; </span><span class="s1">step</span><span class="s2">=&quot;1&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;slider-val&quot; </span><span class="s1">id</span><span class="s2">=&quot;val-pity&quot;</span><span class="s0">&gt;</span><span class="s3">0</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;field-group&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;field-label&quot;</span><span class="s0">&gt;</span><span class="s3">Aatrox XP Buff active?</span><span class="s0">&lt;/span&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">flex</span><span class="s3">; </span><span class="s1">gap</span><span class="s3">:</span><span class="s4">8</span><span class="s2">px</span><span class="s3">; </span><span class="s1">margin-top</span><span class="s3">:</span><span class="s4">4</span><span class="s2">px&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;button </span><span class="s1">class</span><span class="s2">=&quot;drop-btn&quot; </span><span class="s1">id</span><span class="s2">=&quot;btn-aatrox-no&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">flex</span><span class="s3">:</span><span class="s4">1</span><span class="s2">&quot; </span><span class="s1">onclick</span><span class="s2">=&quot;</span><span class="s3">setAatrox(</span><span class="s6">false</span><span class="s3">)</span><span class="s2">&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;drop-name&quot;</span><span class="s0">&gt;</span><span class="s3">No</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s1">class</span><span class="s2">=&quot;drop-btn active&quot; </span><span class="s1">id</span><span class="s2">=&quot;btn-aatrox-yes&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">flex</span><span class="s3">:</span><span class="s4">1</span><span class="s2">&quot; </span><span class="s1">onclick</span><span class="s2">=&quot;</span><span class="s3">setAatrox(</span><span class="s6">true</span><span class="s3">)</span><span class="s2">&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;span </span><span class="s1">class</span><span class="s2">=&quot;drop-name&quot;</span><span class="s0">&gt;</span><span class="s3">Yes (+25% XP)</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+  <span class="s0">&lt;/div&gt;</span>
 
-  <div class="divider"></div>
+  <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;divider&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
 
-  <div id="results-section" style="display:none">
-    <div class="section">
-      <div class="section-title">RNG Meter Info</div>
-      <div class="grid4" style="margin-bottom:12px">
-        <div class="metric-card">
-          <div class="metric-label">Required XP</div>
-          <div class="metric-value" id="r-req-xp">—</div>
-          <div class="metric-sub">for guaranteed pity</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Runs to pity</div>
-          <div class="metric-value" id="r-m">—</div>
-          <div class="metric-sub" id="r-xp-run">XP/run</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Base chance</div>
-          <div class="metric-value" id="r-base-chance">—</div>
-          <div class="metric-sub" id="r-base-1in">—</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Chance with MF</div>
-          <div class="metric-value" id="r-mf-chance">—</div>
-          <div class="metric-sub" id="r-mf-1in">—</div>
-        </div>
-      </div>
-    </div>
+  <span class="s0">&lt;div </span><span class="s1">id</span><span class="s2">=&quot;results-section&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">none&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section-title&quot;</span><span class="s0">&gt;</span><span class="s3">RNG Meter Info</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;grid4&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-bottom</span><span class="s3">:</span><span class="s4">12</span><span class="s2">px&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-card&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Required XP</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-req-xp&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot;</span><span class="s0">&gt;</span><span class="s3">for guaranteed pity</span><span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-card&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Runs to pity</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-m&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-xp-run&quot;</span><span class="s0">&gt;</span><span class="s3">XP/run</span><span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-card&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Base chance</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-base-chance&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-base-1in&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-card&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Chance with MF</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-mf-chance&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-mf-1in&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
 
-    <div class="section">
-      <div class="tab-row">
-        <button class="tab active" onclick="setTab('optimal')">Sweet Spot</button>
-        <button class="tab" onclick="setTab('curve')">Efficiency Curve</button>
-        <button class="tab" onclick="setTab('strategy')">Strategic Analysis</button>
-      </div>
+    <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;section&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;tab-row&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;button </span><span class="s1">class</span><span class="s2">=&quot;tab active&quot; </span><span class="s1">onclick</span><span class="s2">=&quot;</span><span class="s3">setTab(</span><span class="s2">'optimal'</span><span class="s3">)</span><span class="s2">&quot;</span><span class="s0">&gt;</span><span class="s3">Sweet Spot</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s1">class</span><span class="s2">=&quot;tab&quot; </span><span class="s1">onclick</span><span class="s2">=&quot;</span><span class="s3">setTab(</span><span class="s2">'curve'</span><span class="s3">)</span><span class="s2">&quot;</span><span class="s0">&gt;</span><span class="s3">Efficiency Curve</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s1">class</span><span class="s2">=&quot;tab&quot; </span><span class="s1">onclick</span><span class="s2">=&quot;</span><span class="s3">setTab(</span><span class="s2">'strategy'</span><span class="s3">)</span><span class="s2">&quot;</span><span class="s0">&gt;</span><span class="s3">Strategic Analysis</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
 
-      <div id="tab-optimal">
-        <div class="grid3" style="margin-bottom:12px">
-          <div class="highlight-card">
-            <div class="metric-label">Sweet spot (L*)</div>
-            <div class="metric-value" id="r-best-l">—</div>
-            <div class="metric-sub">turn meter OFF here</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Meter % at L*</div>
-            <div class="metric-value" id="r-best-pct">—</div>
-            <div class="metric-sub">accumulated progress</div>
-          </div>
-          <div class="highlight-card">
-            <div class="metric-label">Gain vs meter off</div>
-            <div class="metric-value" id="r-gain">—</div>
-            <div class="metric-sub">efficiency increase</div>
-          </div>
-        </div>
-        <div class="grid2" style="margin-bottom:12px">
-          <div class="metric-card">
-            <div class="metric-label">Optimal rate (with meter)</div>
-            <div class="metric-value" id="r-opt-rate">—</div>
-            <div class="metric-sub">expected drops per run</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Baseline rate (no meter)</div>
-            <div class="metric-value" id="r-base-rate">—</div>
-            <div class="metric-sub">expected drops per run</div>
-          </div>
-        </div>
+      <span class="s0">&lt;div </span><span class="s1">id</span><span class="s2">=&quot;tab-optimal&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;grid3&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-bottom</span><span class="s3">:</span><span class="s4">12</span><span class="s2">px&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;highlight-card&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Sweet spot (L*)</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-best-l&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot;</span><span class="s0">&gt;</span><span class="s3">turn meter OFF here</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-card&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Meter % at L*</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-best-pct&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot;</span><span class="s0">&gt;</span><span class="s3">accumulated progress</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;highlight-card&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Gain vs meter off</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-gain&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot;</span><span class="s0">&gt;</span><span class="s3">efficiency increase</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;grid2&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-bottom</span><span class="s3">:</span><span class="s4">12</span><span class="s2">px&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-card&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Optimal rate (with meter)</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-opt-rate&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot;</span><span class="s0">&gt;</span><span class="s3">expected drops per run</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-card&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-label&quot;</span><span class="s0">&gt;</span><span class="s3">Baseline rate (no meter)</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-value&quot; </span><span class="s1">id</span><span class="s2">=&quot;r-base-rate&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/div&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;metric-sub&quot;</span><span class="s0">&gt;</span><span class="s3">expected drops per run</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
 
-        <div class="advice-box" id="advice-box">
-          <p id="advice-text">—</p>
-        </div>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;advice-box&quot; </span><span class="s1">id</span><span class="s2">=&quot;advice-box&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;p </span><span class="s1">id</span><span class="s2">=&quot;advice-text&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/p&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
 
-        <div style="margin-top:1rem">
-          <div style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px">Meter progress at sweet spot</div>
-          <div class="progress-bar-wrap">
-            <div class="progress-bar" id="progress-bar" style="background:#1D9E75; width:0%"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-tertiary);margin-top:4px">
-            <span>0%</span><span id="prog-label">—</span><span>100% (pity)</span>
-          </div>
-        </div>
-      </div>
+        <span class="s0">&lt;div </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-top</span><span class="s3">:</span><span class="s4">1</span><span class="s2">rem&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">font-size</span><span class="s3">:</span><span class="s4">12</span><span class="s2">px</span><span class="s3">; </span><span class="s1">color</span><span class="s3">:</span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-secondary</span><span class="s3">); </span><span class="s1">margin-bottom</span><span class="s3">:</span><span class="s4">6</span><span class="s2">px&quot;</span><span class="s0">&gt;</span><span class="s3">Meter progress at sweet spot</span><span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;progress-bar-wrap&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;progress-bar&quot; </span><span class="s1">id</span><span class="s2">=&quot;progress-bar&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">background</span><span class="s3">:</span><span class="s5">#1D9E75</span><span class="s3">; </span><span class="s1">width</span><span class="s3">:</span><span class="s4">0</span><span class="s3">%</span><span class="s2">&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+          <span class="s0">&lt;/div&gt;</span>
+          <span class="s0">&lt;div </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">flex</span><span class="s3">;</span><span class="s1">justify-content</span><span class="s3">:</span><span class="s2">space-between</span><span class="s3">;</span><span class="s1">font-size</span><span class="s3">:</span><span class="s4">11</span><span class="s2">px</span><span class="s3">;</span><span class="s1">color</span><span class="s3">:</span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-tertiary</span><span class="s3">);</span><span class="s1">margin-top</span><span class="s3">:</span><span class="s4">4</span><span class="s2">px&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;span&gt;</span><span class="s3">0%</span><span class="s0">&lt;/span&gt;&lt;span </span><span class="s1">id</span><span class="s2">=&quot;prog-label&quot;</span><span class="s0">&gt;</span><span class="s3">—</span><span class="s0">&lt;/span&gt;&lt;span&gt;</span><span class="s3">100% (pity)</span><span class="s0">&lt;/span&gt;</span>
+          <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
 
-      <div id="tab-curve" style="display:none">
-        <div class="chart-wrap">
-          <canvas id="eff-chart" role="img" aria-label="Efficiency curve of drops per meter-off percentage">RNG Meter efficiency curve.</canvas>
-        </div>
-        <div style="display:flex;gap:16px;margin-top:8px;font-size:12px;color:var(--color-text-secondary)">
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>With meter ON up to L</span>
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Sweet spot</span>
-        </div>
-      </div>
+      <span class="s0">&lt;div </span><span class="s1">id</span><span class="s2">=&quot;tab-curve&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">none&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">class</span><span class="s2">=&quot;chart-wrap&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;canvas </span><span class="s1">id</span><span class="s2">=&quot;eff-chart&quot; </span><span class="s1">role</span><span class="s2">=&quot;img&quot; </span><span class="s1">aria-label</span><span class="s2">=&quot;Efficiency curve of drops per meter-off percentage&quot;</span><span class="s0">&gt;</span><span class="s3">RNG Meter efficiency curve.</span><span class="s0">&lt;/canvas&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">flex</span><span class="s3">;</span><span class="s1">gap</span><span class="s3">:</span><span class="s4">16</span><span class="s2">px</span><span class="s3">;</span><span class="s1">margin-top</span><span class="s3">:</span><span class="s4">8</span><span class="s2">px</span><span class="s3">;</span><span class="s1">font-size</span><span class="s3">:</span><span class="s4">12</span><span class="s2">px</span><span class="s3">;</span><span class="s1">color</span><span class="s3">:</span><span class="s0">var</span><span class="s3">(</span><span class="s0">--color-text-secondary</span><span class="s3">)</span><span class="s2">&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;span </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">flex</span><span class="s3">;</span><span class="s1">align-items</span><span class="s3">:</span><span class="s2">center</span><span class="s3">;</span><span class="s1">gap</span><span class="s3">:</span><span class="s4">4</span><span class="s2">px&quot;</span><span class="s0">&gt;&lt;span </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">width</span><span class="s3">:</span><span class="s4">10</span><span class="s2">px</span><span class="s3">;</span><span class="s1">height</span><span class="s3">:</span><span class="s4">10</span><span class="s2">px</span><span class="s3">;</span><span class="s1">border-radius</span><span class="s3">:</span><span class="s4">2</span><span class="s2">px</span><span class="s3">;</span><span class="s1">background</span><span class="s3">:</span><span class="s5">#1D9E75</span><span class="s2">&quot;</span><span class="s0">&gt;&lt;/span&gt;</span><span class="s3">With meter ON up to L</span><span class="s0">&lt;/span&gt;</span>
+          <span class="s0">&lt;span </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">flex</span><span class="s3">;</span><span class="s1">align-items</span><span class="s3">:</span><span class="s2">center</span><span class="s3">;</span><span class="s1">gap</span><span class="s3">:</span><span class="s4">4</span><span class="s2">px&quot;</span><span class="s0">&gt;&lt;span </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">width</span><span class="s3">:</span><span class="s4">10</span><span class="s2">px</span><span class="s3">;</span><span class="s1">height</span><span class="s3">:</span><span class="s4">10</span><span class="s2">px</span><span class="s3">;</span><span class="s1">border-radius</span><span class="s3">:</span><span class="s4">2</span><span class="s2">px</span><span class="s3">;</span><span class="s1">background</span><span class="s3">:</span><span class="s5">#E24B4A</span><span class="s2">&quot;</span><span class="s0">&gt;&lt;/span&gt;</span><span class="s3">Sweet spot</span><span class="s0">&lt;/span&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
 
-      <div id="tab-strategy" style="display:none">
-        <div id="strategy-content"></div>
-      </div>
-    </div>
-  </div>
+      <span class="s0">&lt;div </span><span class="s1">id</span><span class="s2">=&quot;tab-strategy&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">display</span><span class="s3">:</span><span class="s2">none&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s1">id</span><span class="s2">=&quot;strategy-content&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+  <span class="s0">&lt;/div&gt;</span>
 
-  <div id="no-target" class="advice-box" style="margin-top:0.5rem">
-    <p>Select a target drop above to see the full analysis.</p>
-  </div>
-</div>
+  <span class="s0">&lt;div </span><span class="s1">id</span><span class="s2">=&quot;no-target&quot; </span><span class="s1">class</span><span class="s2">=&quot;advice-box&quot; </span><span class="s1">style</span><span class="s2">=&quot;</span><span class="s1">margin-top</span><span class="s3">:</span><span class="s4">0.5</span><span class="s2">rem&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;p&gt;</span><span class="s3">Select a target drop above to see the full analysis.</span><span class="s0">&lt;/p&gt;</span>
+  <span class="s0">&lt;/div&gt;</span>
+<span class="s0">&lt;/div&gt;</span>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-const DATABASE = {
-  "Zombie": {
-    "Revenant Horror T4": {
-      name: "Revenant Horror T4",
-      base_xp: 1000,
-      drops: [
-        { name: "Revenant Flesh", weight: 10000, pool: "TOKEN" },
-        { name: "Foul Flesh", weight: 2000, pool: "MAIN" },
-        { name: "Revenant Viscera", weight: 900, pool: "MAIN" },
-        { name: "Pestilence Rune I", weight: 600, pool: "MAIN" },
-        { name: "Undead Catalyst", weight: 100, pool: "MAIN" },
-        { name: "Revenant Catalyst", weight: 60, pool: "MAIN" },
-        { name: "Smite VI Book", weight: 40, pool: "MAIN" },
-        { name: "Beheaded Horror", weight: 18, pool: "MAIN" },
-        { name: "Snake Rune I", weight: 15, pool: "MAIN" },
-        { name: "Scythe Blade", weight: 8, pool: "MAIN" },
-        { name: "Shard of the Shredded", weight: 13, pool: "EXTRA" },
-        { name: "Undead Rune I", weight: 833, pool: "EXTRA" },
-      ]
-    },
-    "Revenant Horror T5": {
-      name: "Revenant Horror T5",
-      base_xp: 1500,
-      drops: [
-        { name: "Revenant Flesh", weight: 10000, pool: "TOKEN" },
-        { name: "Foul Flesh", weight: 1500, pool: "MAIN" },
-        { name: "Revenant Viscera", weight: 800, pool: "MAIN" },
-        { name: "Pestilence Rune I", weight: 400, pool: "MAIN" },
-        { name: "Undead Catalyst", weight: 90, pool: "MAIN" },
-        { name: "Revenant Catalyst", weight: 50, pool: "MAIN" },
-        { name: "Smite VII Book", weight: 30, pool: "MAIN" },
-        { name: "Beheaded Horror", weight: 16, pool: "MAIN" },
-        { name: "Snake Rune I", weight: 20, pool: "MAIN" },
-        { name: "Scythe Blade", weight: 8, pool: "MAIN" },
-        { name: "Shard of the Shredded", weight: 9, pool: "MAIN" },
-        { name: "Warden Heart", weight: 2, pool: "MAIN" },
-        { name: "Undead Rune I", weight: 833, pool: "EXTRA" },
-      ]
-    }
-  },
-  "Spider": {
-    "Tarantula Broodfather T4": {
-      name: "Tarantula Broodfather T4",
-      base_xp: 400,
-      drops: [
-        { name: "Tarantula Web", weight: 10000, pool: "TOKEN" },
-        { name: "Spider Eye", weight: 3000, pool: "MAIN" },
-        { name: "String", weight: 2000, pool: "MAIN" },
-        { name: "Bite Rune I", weight: 600, pool: "MAIN" },
-        { name: "Spider Catalyst", weight: 120, pool: "MAIN" },
-        { name: "Digested Mosquito", weight: 200, pool: "MAIN" },
-        { name: "Tarantula Catalyst", weight: 30, pool: "MAIN" },
-        { name: "Tarantula Talisman", weight: 10, pool: "MAIN" },
-        { name: "Tarantula Pet (Epic)", weight: 18, pool: "MAIN" },
-        { name: "Tarantula Pet (Legendary)", weight: 3, pool: "MAIN" },
-        { name: "Toxic Arrow Poison", weight: 150, pool: "EXTRA" },
-        { name: "Venom Rune I", weight: 833, pool: "EXTRA" },
-      ]
-    },
-    "Tarantula Broodfather T5": {
-      name: "Tarantula Broodfather T5",
-      base_xp: 600,
-      drops: [
-        { name: "Tarantula Web", weight: 10000, pool: "TOKEN" },
-        { name: "Spider Eye", weight: 2500, pool: "MAIN" },
-        { name: "String", weight: 1500, pool: "MAIN" },
-        { name: "Bite Rune I", weight: 400, pool: "MAIN" },
-        { name: "Spider Catalyst", weight: 100, pool: "MAIN" },
-        { name: "Digested Mosquito", weight: 180, pool: "MAIN" },
-        { name: "Tarantula Catalyst", weight: 25, pool: "MAIN" },
-        { name: "Tarantula Talisman", weight: 8, pool: "MAIN" },
-        { name: "Tarantula Pet (Epic)", weight: 15, pool: "MAIN" },
-        { name: "Tarantula Pet (Legendary)", weight: 2, pool: "MAIN" },
-        { name: "Primordial Belt", weight: 5, pool: "MAIN" },
-        { name: "Toxic Arrow Poison", weight: 120, pool: "EXTRA" },
-        { name: "Venom Rune I", weight: 833, pool: "EXTRA" },
-      ]
-    }
-  },
-  "Wolf": {
-    "Sven Packmaster T4": {
-      name: "Sven Packmaster T4",
-      base_xp: 500,
-      drops: [
-        { name: "Wolf Tooth", weight: 10000, pool: "TOKEN" },
-        { name: "Hamster Wheel", weight: 2000, pool: "MAIN" },
-        { name: "Critical VI Book", weight: 100, pool: "MAIN" },
-        { name: "Furball", weight: 200, pool: "MAIN" },
-        { name: "Red Claw Egg", weight: 15, pool: "MAIN" },
-        { name: "Overflux Capacitor", weight: 5, pool: "MAIN" },
-        { name: "Grizzly Salmon", weight: 7, pool: "MAIN" },
-        { name: "Spirit Rune I", weight: 833, pool: "EXTRA" },
-        { name: "Couture Rune I", weight: 30, pool: "EXTRA" },
-      ]
-    }
-  },
-  "Enderman": {
-    "Voidgloom Seraph T4": {
-      name: "Voidgloom Seraph T4",
-      base_xp: 1000,
-      drops: [
-        { name: "Null Sphere", weight: 10000, pool: "TOKEN" },
-        { name: "Null Atom", weight: 2000, pool: "MAIN" },
-        { name: "Mana Steal I Book", weight: 500, pool: "MAIN" },
-        { name: "Enderman Pet (Epic)", weight: 60, pool: "MAIN" },
-        { name: "Enderman Pet (Legendary)", weight: 12, pool: "MAIN" },
-        { name: "Judgement Core", weight: 5, pool: "MAIN" },
-        { name: "Transmission Tuner", weight: 20, pool: "MAIN" },
-        { name: "Etherwarp Merge", weight: 3, pool: "MAIN" },
-        { name: "Shadow Warp I Rune", weight: 200, pool: "EXTRA" },
-        { name: "Wither Shield I Rune", weight: 100, pool: "EXTRA" },
-        { name: "Ice Rune I", weight: 833, pool: "EXTRA" },
-      ]
-    }
-  },
-  "Blaze": {
-    "Inferno Demonlord T4": {
-      name: "Inferno Demonlord T4",
-      base_xp: 1000,
-      drops: [
-        { name: "Derelict Ashe", weight: 10000, pool: "TOKEN" },
-        { name: "Mage Blood", weight: 2000, pool: "MAIN" },
-        { name: "Fire Aspect III Book", weight: 800, pool: "MAIN" },
-        { name: "Scorched Power Crystal", weight: 300, pool: "MAIN" },
-        { name: "Plasma Bucket", weight: 200, pool: "MAIN" },
-        { name: "Blaze Rod", weight: 500, pool: "MAIN" },
-        { name: "Hellfire Rod", weight: 20, pool: "MAIN" },
-        { name: "Demonlord Pet (Rare)", weight: 50, pool: "MAIN" },
-        { name: "Demonlord Pet (Epic)", weight: 8, pool: "MAIN" },
-        { name: "Inferno Fuel Block", weight: 400, pool: "EXTRA" },
-        { name: "Fiery Rune I", weight: 833, pool: "EXTRA" },
-      ]
-    }
-  },
-  "Vampire": {
-    "Riftstalker Bloodfiend T4": {
-      name: "Riftstalker Bloodfiend T4",
-      base_xp: 150,
-      drops: [
-        { name: "Coven Seal", weight: 10000, pool: "TOKEN" },
-        { name: "Vampire Fang", weight: 3000, pool: "MAIN" },
-        { name: "Blood Ichors", weight: 1500, pool: "MAIN" },
-        { name: "Hematemesis I Rune", weight: 400, pool: "MAIN" },
-        { name: "Caduceus Rod", weight: 100, pool: "MAIN" },
-        { name: "Sanguinite", weight: 200, pool: "MAIN" },
-        { name: "Twilight Rune I", weight: 300, pool: "MAIN" },
-        { name: "Rift Prism", weight: 10, pool: "MAIN" },
-        { name: "Adrenaline", weight: 15, pool: "MAIN" },
-        { name: "Vampire Rune I", weight: 833, pool: "EXTRA" },
-      ]
-    }
-  }
-};
+<span class="s0">&lt;script </span><span class="s1">src</span><span class="s2">=&quot;https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+<span class="s0">&lt;script&gt;</span>
+<span class="s6">const </span><span class="s3">DATABASE = {</span>
+  <span class="s2">&quot;Zombie&quot;</span><span class="s3">: {</span>
+    <span class="s2">&quot;Revenant Horror T4&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Revenant Horror T4&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">1000</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Revenant Flesh&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Foul Flesh&quot;</span><span class="s3">, weight: </span><span class="s4">2000</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Revenant Viscera&quot;</span><span class="s3">, weight: </span><span class="s4">900</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Pestilence Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">600</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Undead Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">100</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Revenant Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">60</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Smite VI Book&quot;</span><span class="s3">, weight: </span><span class="s4">40</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Beheaded Horror&quot;</span><span class="s3">, weight: </span><span class="s4">18</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Snake Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">15</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Scythe Blade&quot;</span><span class="s3">, weight: </span><span class="s4">8</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Shard of the Shredded&quot;</span><span class="s3">, weight: </span><span class="s4">13</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Undead Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">},</span>
+    <span class="s2">&quot;Revenant Horror T5&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Revenant Horror T5&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">1500</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Revenant Flesh&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Foul Flesh&quot;</span><span class="s3">, weight: </span><span class="s4">1500</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Revenant Viscera&quot;</span><span class="s3">, weight: </span><span class="s4">800</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Pestilence Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">400</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Undead Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">90</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Revenant Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">50</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Smite VII Book&quot;</span><span class="s3">, weight: </span><span class="s4">30</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Beheaded Horror&quot;</span><span class="s3">, weight: </span><span class="s4">16</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Snake Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">20</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Scythe Blade&quot;</span><span class="s3">, weight: </span><span class="s4">8</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Shard of the Shredded&quot;</span><span class="s3">, weight: </span><span class="s4">9</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Warden Heart&quot;</span><span class="s3">, weight: </span><span class="s4">2</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Undead Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">}</span>
+  <span class="s3">},</span>
+  <span class="s2">&quot;Spider&quot;</span><span class="s3">: {</span>
+    <span class="s2">&quot;Tarantula Broodfather T4&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Tarantula Broodfather T4&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">400</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Web&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Spider Eye&quot;</span><span class="s3">, weight: </span><span class="s4">3000</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;String&quot;</span><span class="s3">, weight: </span><span class="s4">2000</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Bite Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">600</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Spider Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">120</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Digested Mosquito&quot;</span><span class="s3">, weight: </span><span class="s4">200</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">30</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Talisman&quot;</span><span class="s3">, weight: </span><span class="s4">10</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Pet (Epic)&quot;</span><span class="s3">, weight: </span><span class="s4">18</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Pet (Legendary)&quot;</span><span class="s3">, weight: </span><span class="s4">3</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Toxic Arrow Poison&quot;</span><span class="s3">, weight: </span><span class="s4">150</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Venom Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">},</span>
+    <span class="s2">&quot;Tarantula Broodfather T5&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Tarantula Broodfather T5&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">600</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Web&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Spider Eye&quot;</span><span class="s3">, weight: </span><span class="s4">2500</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;String&quot;</span><span class="s3">, weight: </span><span class="s4">1500</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Bite Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">400</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Spider Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">100</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Digested Mosquito&quot;</span><span class="s3">, weight: </span><span class="s4">180</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Catalyst&quot;</span><span class="s3">, weight: </span><span class="s4">25</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Talisman&quot;</span><span class="s3">, weight: </span><span class="s4">8</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Pet (Epic)&quot;</span><span class="s3">, weight: </span><span class="s4">15</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Tarantula Pet (Legendary)&quot;</span><span class="s3">, weight: </span><span class="s4">2</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Primordial Belt&quot;</span><span class="s3">, weight: </span><span class="s4">5</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Toxic Arrow Poison&quot;</span><span class="s3">, weight: </span><span class="s4">120</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Venom Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">}</span>
+  <span class="s3">},</span>
+  <span class="s2">&quot;Wolf&quot;</span><span class="s3">: {</span>
+    <span class="s2">&quot;Sven Packmaster T4&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Sven Packmaster T4&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">500</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Wolf Tooth&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Hamster Wheel&quot;</span><span class="s3">, weight: </span><span class="s4">2000</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Critical VI Book&quot;</span><span class="s3">, weight: </span><span class="s4">100</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Furball&quot;</span><span class="s3">, weight: </span><span class="s4">200</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Red Claw Egg&quot;</span><span class="s3">, weight: </span><span class="s4">15</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Overflux Capacitor&quot;</span><span class="s3">, weight: </span><span class="s4">5</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Grizzly Salmon&quot;</span><span class="s3">, weight: </span><span class="s4">7</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Spirit Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Couture Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">30</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">}</span>
+  <span class="s3">},</span>
+  <span class="s2">&quot;Enderman&quot;</span><span class="s3">: {</span>
+    <span class="s2">&quot;Voidgloom Seraph T4&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Voidgloom Seraph T4&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">1000</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Null Sphere&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Null Atom&quot;</span><span class="s3">, weight: </span><span class="s4">2000</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Mana Steal I Book&quot;</span><span class="s3">, weight: </span><span class="s4">500</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Enderman Pet (Epic)&quot;</span><span class="s3">, weight: </span><span class="s4">60</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Enderman Pet (Legendary)&quot;</span><span class="s3">, weight: </span><span class="s4">12</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Judgement Core&quot;</span><span class="s3">, weight: </span><span class="s4">5</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Transmission Tuner&quot;</span><span class="s3">, weight: </span><span class="s4">20</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Etherwarp Merge&quot;</span><span class="s3">, weight: </span><span class="s4">3</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Shadow Warp I Rune&quot;</span><span class="s3">, weight: </span><span class="s4">200</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Wither Shield I Rune&quot;</span><span class="s3">, weight: </span><span class="s4">100</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Ice Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">}</span>
+  <span class="s3">},</span>
+  <span class="s2">&quot;Blaze&quot;</span><span class="s3">: {</span>
+    <span class="s2">&quot;Inferno Demonlord T4&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Inferno Demonlord T4&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">1000</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Derelict Ashe&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Mage Blood&quot;</span><span class="s3">, weight: </span><span class="s4">2000</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Fire Aspect III Book&quot;</span><span class="s3">, weight: </span><span class="s4">800</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Scorched Power Crystal&quot;</span><span class="s3">, weight: </span><span class="s4">300</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Plasma Bucket&quot;</span><span class="s3">, weight: </span><span class="s4">200</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Blaze Rod&quot;</span><span class="s3">, weight: </span><span class="s4">500</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Hellfire Rod&quot;</span><span class="s3">, weight: </span><span class="s4">20</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Demonlord Pet (Rare)&quot;</span><span class="s3">, weight: </span><span class="s4">50</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Demonlord Pet (Epic)&quot;</span><span class="s3">, weight: </span><span class="s4">8</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Inferno Fuel Block&quot;</span><span class="s3">, weight: </span><span class="s4">400</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Fiery Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">}</span>
+  <span class="s3">},</span>
+  <span class="s2">&quot;Vampire&quot;</span><span class="s3">: {</span>
+    <span class="s2">&quot;Riftstalker Bloodfiend T4&quot;</span><span class="s3">: {</span>
+      <span class="s3">name: </span><span class="s2">&quot;Riftstalker Bloodfiend T4&quot;</span><span class="s3">,</span>
+      <span class="s3">base_xp: </span><span class="s4">150</span><span class="s3">,</span>
+      <span class="s3">drops: [</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Coven Seal&quot;</span><span class="s3">, weight: </span><span class="s4">10000</span><span class="s3">, pool: </span><span class="s2">&quot;TOKEN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Vampire Fang&quot;</span><span class="s3">, weight: </span><span class="s4">3000</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Blood Ichors&quot;</span><span class="s3">, weight: </span><span class="s4">1500</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Hematemesis I Rune&quot;</span><span class="s3">, weight: </span><span class="s4">400</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Caduceus Rod&quot;</span><span class="s3">, weight: </span><span class="s4">100</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Sanguinite&quot;</span><span class="s3">, weight: </span><span class="s4">200</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Twilight Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">300</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Rift Prism&quot;</span><span class="s3">, weight: </span><span class="s4">10</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Adrenaline&quot;</span><span class="s3">, weight: </span><span class="s4">15</span><span class="s3">, pool: </span><span class="s2">&quot;MAIN&quot; </span><span class="s3">},</span>
+        <span class="s3">{ name: </span><span class="s2">&quot;Vampire Rune I&quot;</span><span class="s3">, weight: </span><span class="s4">833</span><span class="s3">, pool: </span><span class="s2">&quot;EXTRA&quot; </span><span class="s3">},</span>
+      <span class="s3">]</span>
+    <span class="s3">}</span>
+  <span class="s3">}</span>
+<span class="s3">};</span>
 
-let currentBoss = DATABASE["Wolf"]["Sven Packmaster T4"];
-let selectedDrop = null;
-let aatrox = true;
-let effChart = null;
-let currentTab = 'optimal';
+<span class="s6">let </span><span class="s3">currentBoss = DATABASE[</span><span class="s2">&quot;Wolf&quot;</span><span class="s3">][</span><span class="s2">&quot;Sven Packmaster T4&quot;</span><span class="s3">];</span>
+<span class="s6">let </span><span class="s3">selectedDrop = </span><span class="s6">null</span><span class="s3">;</span>
+<span class="s6">let </span><span class="s3">aatrox = </span><span class="s6">true</span><span class="s3">;</span>
+<span class="s6">let </span><span class="s3">effChart = </span><span class="s6">null</span><span class="s3">;</span>
+<span class="s6">let </span><span class="s3">currentTab = </span><span class="s2">'optimal'</span><span class="s3">;</span>
 
-function setAatrox(val) {
-  aatrox = val;
-  document.getElementById('btn-aatrox-yes').classList.toggle('active', val);
-  document.getElementById('btn-aatrox-no').classList.toggle('active', !val);
-  if (selectedDrop !== null) compute();
-}
+<span class="s6">function </span><span class="s3">setAatrox(val) {</span>
+  <span class="s3">aatrox = val;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'btn-aatrox-yes'</span><span class="s3">).classList.toggle(</span><span class="s2">'active'</span><span class="s3">, val);</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'btn-aatrox-no'</span><span class="s3">).classList.toggle(</span><span class="s2">'active'</span><span class="s3">, !val);</span>
+  <span class="s6">if </span><span class="s3">(selectedDrop !== </span><span class="s6">null</span><span class="s3">) compute();</span>
+<span class="s3">}</span>
 
-function initSelectors() {
-  const actSel = document.getElementById('sel-activity');
-  Object.keys(DATABASE).forEach(type => {
-    const o = document.createElement('option');
-    o.value = type; o.textContent = type;
-    actSel.appendChild(o);
-  });
-  actSel.value = 'Wolf';
-  updateBossSelector();
-  actSel.addEventListener('change', () => { updateBossSelector(); });
-}
+<span class="s6">function </span><span class="s3">initSelectors() {</span>
+  <span class="s6">const </span><span class="s3">actSel = document.getElementById(</span><span class="s2">'sel-activity'</span><span class="s3">);</span>
+  <span class="s3">Object.keys(DATABASE).forEach(type =&gt; {</span>
+    <span class="s6">const </span><span class="s3">o = document.createElement(</span><span class="s2">'option'</span><span class="s3">);</span>
+    <span class="s3">o.value = type; o.textContent = type;</span>
+    <span class="s3">actSel.appendChild(o);</span>
+  <span class="s3">});</span>
+  <span class="s3">actSel.value = </span><span class="s2">'Wolf'</span><span class="s3">;</span>
+  <span class="s3">updateBossSelector();</span>
+  <span class="s3">actSel.addEventListener(</span><span class="s2">'change'</span><span class="s3">, () =&gt; { updateBossSelector(); });</span>
+<span class="s3">}</span>
 
-function updateBossSelector() {
-  const type = document.getElementById('sel-activity').value;
-  const bossSel = document.getElementById('sel-boss');
-  bossSel.innerHTML = '';
-  Object.keys(DATABASE[type]).forEach(bossKey => {
-    const o = document.createElement('option');
-    o.value = bossKey; o.textContent = bossKey;
-    bossSel.appendChild(o);
-  });
-  bossSel.value = Object.keys(DATABASE[type])[Object.keys(DATABASE[type]).length - 1];
-  onBossChange();
-  bossSel.addEventListener('change', onBossChange);
-}
+<span class="s6">function </span><span class="s3">updateBossSelector() {</span>
+  <span class="s6">const </span><span class="s3">type = document.getElementById(</span><span class="s2">'sel-activity'</span><span class="s3">).value;</span>
+  <span class="s6">const </span><span class="s3">bossSel = document.getElementById(</span><span class="s2">'sel-boss'</span><span class="s3">);</span>
+  <span class="s3">bossSel.innerHTML = </span><span class="s2">''</span><span class="s3">;</span>
+  <span class="s3">Object.keys(DATABASE[type]).forEach(bossKey =&gt; {</span>
+    <span class="s6">const </span><span class="s3">o = document.createElement(</span><span class="s2">'option'</span><span class="s3">);</span>
+    <span class="s3">o.value = bossKey; o.textContent = bossKey;</span>
+    <span class="s3">bossSel.appendChild(o);</span>
+  <span class="s3">});</span>
+  <span class="s3">bossSel.value = Object.keys(DATABASE[type])[Object.keys(DATABASE[type]).length - </span><span class="s4">1</span><span class="s3">];</span>
+  <span class="s3">onBossChange();</span>
+  <span class="s3">bossSel.addEventListener(</span><span class="s2">'change'</span><span class="s3">, onBossChange);</span>
+<span class="s3">}</span>
 
-function onBossChange() {
-  const type = document.getElementById('sel-activity').value;
-  const bossKey = document.getElementById('sel-boss').value;
-  currentBoss = DATABASE[type][bossKey];
-  selectedDrop = null;
-  if (effChart) { effChart.destroy(); effChart = null; }
-  document.getElementById('results-section').style.display = 'none';
-  document.getElementById('no-target').style.display = '';
-  buildDropGrid();
-}
+<span class="s6">function </span><span class="s3">onBossChange() {</span>
+  <span class="s6">const </span><span class="s3">type = document.getElementById(</span><span class="s2">'sel-activity'</span><span class="s3">).value;</span>
+  <span class="s6">const </span><span class="s3">bossKey = document.getElementById(</span><span class="s2">'sel-boss'</span><span class="s3">).value;</span>
+  <span class="s3">currentBoss = DATABASE[type][bossKey];</span>
+  <span class="s3">selectedDrop = </span><span class="s6">null</span><span class="s3">;</span>
+  <span class="s6">if </span><span class="s3">(effChart) { effChart.destroy(); effChart = </span><span class="s6">null</span><span class="s3">; }</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'results-section'</span><span class="s3">).style.display = </span><span class="s2">'none'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'no-target'</span><span class="s3">).style.display = </span><span class="s2">''</span><span class="s3">;</span>
+  <span class="s3">buildDropGrid();</span>
+<span class="s3">}</span>
 
-function setTab(t) {
-  currentTab = t;
-  document.querySelectorAll('.tab').forEach((b,i) => {
-    b.classList.toggle('active', ['optimal','curve','strategy'][i] === t);
-  });
-  document.getElementById('tab-optimal').style.display = t === 'optimal' ? '' : 'none';
-  document.getElementById('tab-curve').style.display = t === 'curve' ? '' : 'none';
-  document.getElementById('tab-strategy').style.display = t === 'strategy' ? '' : 'none';
-  if (t === 'curve' && selectedDrop !== null) renderChart();
-}
+<span class="s6">function </span><span class="s3">setTab(t) {</span>
+  <span class="s3">currentTab = t;</span>
+  <span class="s3">document.querySelectorAll(</span><span class="s2">'.tab'</span><span class="s3">).forEach((b,i) =&gt; {</span>
+    <span class="s3">b.classList.toggle(</span><span class="s2">'active'</span><span class="s3">, [</span><span class="s2">'optimal'</span><span class="s3">,</span><span class="s2">'curve'</span><span class="s3">,</span><span class="s2">'strategy'</span><span class="s3">][i] === t);</span>
+  <span class="s3">});</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'tab-optimal'</span><span class="s3">).style.display = t === </span><span class="s2">'optimal' </span><span class="s3">? </span><span class="s2">'' </span><span class="s3">: </span><span class="s2">'none'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'tab-curve'</span><span class="s3">).style.display = t === </span><span class="s2">'curve' </span><span class="s3">? </span><span class="s2">'' </span><span class="s3">: </span><span class="s2">'none'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'tab-strategy'</span><span class="s3">).style.display = t === </span><span class="s2">'strategy' </span><span class="s3">? </span><span class="s2">'' </span><span class="s3">: </span><span class="s2">'none'</span><span class="s3">;</span>
+  <span class="s6">if </span><span class="s3">(t === </span><span class="s2">'curve' </span><span class="s3">&amp;&amp; selectedDrop !== </span><span class="s6">null</span><span class="s3">) renderChart();</span>
+<span class="s3">}</span>
 
-function computeWeights(drops, mf) {
-  const tokenMain = drops.filter(d => d.pool !== 'EXTRA').reduce((s,d) => s+d.weight, 0);
-  const allW = drops.reduce((s,d) => s+d.weight, 0);
-  const baseChances = {};
-  drops.forEach(d => {
-    baseChances[d.name] = d.pool !== 'EXTRA' ? d.weight/tokenMain : d.weight/allW;
-  });
-  const mfW = {};
-  drops.forEach(d => {
-    mfW[d.name] = baseChances[d.name] < 0.05 ? d.weight*(1+mf/100) : d.weight*1.0;
-  });
-  const mfTM = drops.filter(d => d.pool !== 'EXTRA').reduce((s,d) => s+mfW[d.name], 0);
-  const mfAll = drops.reduce((s,d) => s+mfW[d.name], 0);
-  return { mfW, mfTM, mfAll, baseChances };
-}
+<span class="s6">function </span><span class="s3">computeWeights(drops, mf) {</span>
+  <span class="s6">const </span><span class="s3">tokenMain = drops.filter(d =&gt; d.pool !== </span><span class="s2">'EXTRA'</span><span class="s3">).reduce((s,d) =&gt; s+d.weight, </span><span class="s4">0</span><span class="s3">);</span>
+  <span class="s6">const </span><span class="s3">allW = drops.reduce((s,d) =&gt; s+d.weight, </span><span class="s4">0</span><span class="s3">);</span>
+  <span class="s6">const </span><span class="s3">baseChances = {};</span>
+  <span class="s3">drops.forEach(d =&gt; {</span>
+    <span class="s3">baseChances[d.name] = d.pool !== </span><span class="s2">'EXTRA' </span><span class="s3">? d.weight/tokenMain : d.weight/allW;</span>
+  <span class="s3">});</span>
+  <span class="s6">const </span><span class="s3">mfW = {};</span>
+  <span class="s3">drops.forEach(d =&gt; {</span>
+    <span class="s3">mfW[d.name] = baseChances[d.name] &lt; </span><span class="s4">0.05 </span><span class="s3">? d.weight*(</span><span class="s4">1</span><span class="s3">+mf/</span><span class="s4">100</span><span class="s3">) : d.weight*</span><span class="s4">1.0</span><span class="s3">;</span>
+  <span class="s3">});</span>
+  <span class="s6">const </span><span class="s3">mfTM = drops.filter(d =&gt; d.pool !== </span><span class="s2">'EXTRA'</span><span class="s3">).reduce((s,d) =&gt; s+mfW[d.name], </span><span class="s4">0</span><span class="s3">);</span>
+  <span class="s6">const </span><span class="s3">mfAll = drops.reduce((s,d) =&gt; s+mfW[d.name], </span><span class="s4">0</span><span class="s3">);</span>
+  <span class="s6">return </span><span class="s3">{ mfW, mfTM, mfAll, baseChances };</span>
+<span class="s3">}</span>
 
-function solveOptimal(drop, drops, mf, pityLevel, aatroxOn) {
-  const { mfW, mfTM, mfAll, baseChances } = computeWeights(drops, mf);
-  const baseChancePct = baseChances[drop.name] * 100;
-  const reqXp = Math.floor(50000 / baseChancePct);
-  const aatroxMult = aatroxOn ? 1.25 : 1.0;
-  const pityMult = 1 + pityLevel * 0.01;
-  const xpPerRun = currentBoss.base_xp * aatroxMult * pityMult;
-  const m = Math.ceil(reqXp / xpPerRun);
-  const baseTW = mfW[drop.name];
-  const poolTotal = drop.pool !== 'EXTRA' ? mfTM : mfAll;
-  const p = baseTW / poolTotal;
+<span class="s6">function </span><span class="s3">solveOptimal(drop, drops, mf, pityLevel, aatroxOn) {</span>
+  <span class="s6">const </span><span class="s3">{ mfW, mfTM, mfAll, baseChances } = computeWeights(drops, mf);</span>
+  <span class="s6">const </span><span class="s3">baseChancePct = baseChances[drop.name] * </span><span class="s4">100</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">reqXp = Math.floor(</span><span class="s4">50000 </span><span class="s3">/ baseChancePct);</span>
+  <span class="s6">const </span><span class="s3">aatroxMult = aatroxOn ? </span><span class="s4">1.25 </span><span class="s3">: </span><span class="s4">1.0</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">pityMult = </span><span class="s4">1 </span><span class="s3">+ pityLevel * </span><span class="s4">0.01</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">xpPerRun = currentBoss.base_xp * aatroxMult * pityMult;</span>
+  <span class="s6">const </span><span class="s3">m = Math.ceil(reqXp / xpPerRun);</span>
+  <span class="s6">const </span><span class="s3">baseTW = mfW[drop.name];</span>
+  <span class="s6">const </span><span class="s3">poolTotal = drop.pool !== </span><span class="s2">'EXTRA' </span><span class="s3">? mfTM : mfAll;</span>
+  <span class="s6">const </span><span class="s3">p = baseTW / poolTotal;</span>
 
-  let bestL = 0, maxEff = 0, currentS = 1.0, sumS = 0.0;
-  const effByL = [];
+  <span class="s6">let </span><span class="s3">bestL = </span><span class="s4">0</span><span class="s3">, maxEff = </span><span class="s4">0</span><span class="s3">, currentS = </span><span class="s4">1.0</span><span class="s3">, sumS = </span><span class="s4">0.0</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">effByL = [];</span>
 
-  for (let L = 0; L <= m; L++) {
-    const num = 1 + currentS * (m - L) * p;
-    const den = sumS + currentS * (m - L + 1);
-    const eff = num / den;
-    effByL.push({ L, eff, pct: (L / m) * 100 });
-    if (eff > maxEff) { maxEff = eff; bestL = L; }
+  <span class="s6">for </span><span class="s3">(</span><span class="s6">let </span><span class="s3">L = </span><span class="s4">0</span><span class="s3">; L &lt;= m; L++) {</span>
+    <span class="s6">const </span><span class="s3">num = </span><span class="s4">1 </span><span class="s3">+ currentS * (m - L) * p;</span>
+    <span class="s6">const </span><span class="s3">den = sumS + currentS * (m - L + </span><span class="s4">1</span><span class="s3">);</span>
+    <span class="s6">const </span><span class="s3">eff = num / den;</span>
+    <span class="s3">effByL.push({ L, eff, pct: (L / m) * </span><span class="s4">100 </span><span class="s3">});</span>
+    <span class="s6">if </span><span class="s3">(eff &gt; maxEff) { maxEff = eff; bestL = L; }</span>
 
-    if (L < m) {
-      const storedXp = L * xpPerRun;
-      const mult = 1 + Math.min(2 * (storedXp / reqXp), 2);
-      const boostedW = baseTW * mult;
-      const curTotal = drop.pool !== 'EXTRA' ? mfTM - baseTW + boostedW : mfAll - baseTW + boostedW;
-      const pL = boostedW / curTotal;
-      sumS += currentS;
-      currentS *= (1 - pL);
-    }
-  }
+    <span class="s6">if </span><span class="s3">(L &lt; m) {</span>
+      <span class="s6">const </span><span class="s3">storedXp = L * xpPerRun;</span>
+      <span class="s6">const </span><span class="s3">mult = </span><span class="s4">1 </span><span class="s3">+ Math.min(</span><span class="s4">2 </span><span class="s3">* (storedXp / reqXp), </span><span class="s4">2</span><span class="s3">);</span>
+      <span class="s6">const </span><span class="s3">boostedW = baseTW * mult;</span>
+      <span class="s6">const </span><span class="s3">curTotal = drop.pool !== </span><span class="s2">'EXTRA' </span><span class="s3">? mfTM - baseTW + boostedW : mfAll - baseTW + boostedW;</span>
+      <span class="s6">const </span><span class="s3">pL = boostedW / curTotal;</span>
+      <span class="s3">sumS += currentS;</span>
+      <span class="s3">currentS *= (</span><span class="s4">1 </span><span class="s3">- pL);</span>
+    <span class="s3">}</span>
+  <span class="s3">}</span>
 
-  const baselineEff = (1 + m * p) / (m + 1);
-  const gain = ((maxEff / baselineEff) - 1) * 100;
-  const baseChanceNoMF = baseChances[drop.name];
+  <span class="s6">const </span><span class="s3">baselineEff = (</span><span class="s4">1 </span><span class="s3">+ m * p) / (m + </span><span class="s4">1</span><span class="s3">);</span>
+  <span class="s6">const </span><span class="s3">gain = ((maxEff / baselineEff) - </span><span class="s4">1</span><span class="s3">) * </span><span class="s4">100</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">baseChanceNoMF = baseChances[drop.name];</span>
 
-  return { bestL, maxEff, m, p, baseChanceNoMF, reqXp, xpPerRun, baselineEff, gain, effByL, pct: (bestL/m)*100 };
-}
+  <span class="s6">return </span><span class="s3">{ bestL, maxEff, m, p, baseChanceNoMF, reqXp, xpPerRun, baselineEff, gain, effByL, pct: (bestL/m)*</span><span class="s4">100 </span><span class="s3">};</span>
+<span class="s3">}</span>
 
-function buildDropGrid() {
-  const grid = document.getElementById('drop-grid');
-  grid.innerHTML = '';
-  const { baseChances } = computeWeights(currentBoss.drops, 0);
-  currentBoss.drops.forEach((d, i) => {
-    const pct = baseChances[d.name] * 100;
-    const btn = document.createElement('button');
-    btn.className = 'drop-btn' + (selectedDrop === i ? ' active' : '');
-    const poolClass = d.pool === 'MAIN' ? 'pool-main' : d.pool === 'EXTRA' ? 'pool-extra' : 'pool-token';
-    btn.innerHTML = `<div class="drop-name">${d.name}</div>
-      <div class="drop-chance">~${pct < 0.1 ? pct.toFixed(3) : pct.toFixed(2)}% base</div>
-      <div class="drop-pool ${poolClass}">${d.pool}</div>`;
-    btn.onclick = () => { selectedDrop = i; buildDropGrid(); compute(); };
-    grid.appendChild(btn);
-  });
-}
+<span class="s6">function </span><span class="s3">buildDropGrid() {</span>
+  <span class="s6">const </span><span class="s3">grid = document.getElementById(</span><span class="s2">'drop-grid'</span><span class="s3">);</span>
+  <span class="s3">grid.innerHTML = </span><span class="s2">''</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">{ baseChances } = computeWeights(currentBoss.drops, </span><span class="s4">0</span><span class="s3">);</span>
+  <span class="s3">currentBoss.drops.forEach((d, i) =&gt; {</span>
+    <span class="s6">const </span><span class="s3">pct = baseChances[d.name] * </span><span class="s4">100</span><span class="s3">;</span>
+    <span class="s6">const </span><span class="s3">btn = document.createElement(</span><span class="s2">'button'</span><span class="s3">);</span>
+    <span class="s3">btn.className = </span><span class="s2">'drop-btn' </span><span class="s3">+ (selectedDrop === i ? </span><span class="s2">' active' </span><span class="s3">: </span><span class="s2">''</span><span class="s3">);</span>
+    <span class="s6">const </span><span class="s3">poolClass = d.pool === </span><span class="s2">'MAIN' </span><span class="s3">? </span><span class="s2">'pool-main' </span><span class="s3">: d.pool === </span><span class="s2">'EXTRA' </span><span class="s3">? </span><span class="s2">'pool-extra' </span><span class="s3">: </span><span class="s2">'pool-token'</span><span class="s3">;</span>
+    <span class="s3">btn.innerHTML = </span><span class="s2">`&lt;div class=&quot;drop-name&quot;&gt;</span><span class="s3">${d.name}</span><span class="s2">&lt;/div&gt; 
+      &lt;div class=&quot;drop-chance&quot;&gt;~</span><span class="s3">${pct &lt; </span><span class="s4">0.1 </span><span class="s3">? pct.toFixed(</span><span class="s4">3</span><span class="s3">) : pct.toFixed(</span><span class="s4">2</span><span class="s3">)}</span><span class="s2">% base&lt;/div&gt; 
+      &lt;div class=&quot;drop-pool </span><span class="s3">${poolClass}</span><span class="s2">&quot;&gt;</span><span class="s3">${d.pool}</span><span class="s2">&lt;/div&gt;`</span><span class="s3">;</span>
+    <span class="s3">btn.onclick = () =&gt; { selectedDrop = i; buildDropGrid(); compute(); };</span>
+    <span class="s3">grid.appendChild(btn);</span>
+  <span class="s3">});</span>
+<span class="s3">}</span>
 
-function compute() {
-  if (selectedDrop === null) return;
-  const drop = currentBoss.drops[selectedDrop];
-  const mf = parseInt(document.getElementById('sl-mf').value);
-  const pity = parseInt(document.getElementById('sl-pity').value);
-  const res = solveOptimal(drop, currentBoss.drops, mf, pity, aatrox);
+<span class="s6">function </span><span class="s3">compute() {</span>
+  <span class="s6">if </span><span class="s3">(selectedDrop === </span><span class="s6">null</span><span class="s3">) </span><span class="s6">return</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">drop = currentBoss.drops[selectedDrop];</span>
+  <span class="s6">const </span><span class="s3">mf = parseInt(document.getElementById(</span><span class="s2">'sl-mf'</span><span class="s3">).value);</span>
+  <span class="s6">const </span><span class="s3">pity = parseInt(document.getElementById(</span><span class="s2">'sl-pity'</span><span class="s3">).value);</span>
+  <span class="s6">const </span><span class="s3">res = solveOptimal(drop, currentBoss.drops, mf, pity, aatrox);</span>
 
-  document.getElementById('results-section').style.display = '';
-  document.getElementById('no-target').style.display = 'none';
+  <span class="s3">document.getElementById(</span><span class="s2">'results-section'</span><span class="s3">).style.display = </span><span class="s2">''</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'no-target'</span><span class="s3">).style.display = </span><span class="s2">'none'</span><span class="s3">;</span>
 
-  document.getElementById('r-req-xp').textContent = res.reqXp.toLocaleString();
-  document.getElementById('r-m').textContent = res.m.toLocaleString();
-  document.getElementById('r-xp-run').textContent = res.xpPerRun.toFixed(0) + ' XP/run';
-  document.getElementById('r-base-chance').textContent = (res.baseChanceNoMF*100).toFixed(4) + '%';
-  document.getElementById('r-base-1in').textContent = '1 in ' + Math.round(1/res.baseChanceNoMF).toLocaleString();
-  document.getElementById('r-mf-chance').textContent = (res.p*100).toFixed(4) + '%';
-  document.getElementById('r-mf-1in').textContent = '1 in ' + Math.round(1/res.p).toLocaleString();
+  <span class="s3">document.getElementById(</span><span class="s2">'r-req-xp'</span><span class="s3">).textContent = res.reqXp.toLocaleString();</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-m'</span><span class="s3">).textContent = res.m.toLocaleString();</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-xp-run'</span><span class="s3">).textContent = res.xpPerRun.toFixed(</span><span class="s4">0</span><span class="s3">) + </span><span class="s2">' XP/run'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-base-chance'</span><span class="s3">).textContent = (res.baseChanceNoMF*</span><span class="s4">100</span><span class="s3">).toFixed(</span><span class="s4">4</span><span class="s3">) + </span><span class="s2">'%'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-base-1in'</span><span class="s3">).textContent = </span><span class="s2">'1 in ' </span><span class="s3">+ Math.round(</span><span class="s4">1</span><span class="s3">/res.baseChanceNoMF).toLocaleString();</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-mf-chance'</span><span class="s3">).textContent = (res.p*</span><span class="s4">100</span><span class="s3">).toFixed(</span><span class="s4">4</span><span class="s3">) + </span><span class="s2">'%'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-mf-1in'</span><span class="s3">).textContent = </span><span class="s2">'1 in ' </span><span class="s3">+ Math.round(</span><span class="s4">1</span><span class="s3">/res.p).toLocaleString();</span>
 
-  document.getElementById('r-best-l').textContent = res.bestL.toLocaleString() + ' runs';
-  document.getElementById('r-best-pct').textContent = res.pct.toFixed(1) + '%';
-  document.getElementById('r-gain').textContent = '+' + res.gain.toFixed(2) + '%';
-  document.getElementById('r-opt-rate').textContent = '1 in ' + Math.round(1/res.maxEff).toLocaleString();
-  document.getElementById('r-base-rate').textContent = '1 in ' + Math.round(1/res.baselineEff).toLocaleString();
+  <span class="s3">document.getElementById(</span><span class="s2">'r-best-l'</span><span class="s3">).textContent = res.bestL.toLocaleString() + </span><span class="s2">' runs'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-best-pct'</span><span class="s3">).textContent = res.pct.toFixed(</span><span class="s4">1</span><span class="s3">) + </span><span class="s2">'%'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-gain'</span><span class="s3">).textContent = </span><span class="s2">'+' </span><span class="s3">+ res.gain.toFixed(</span><span class="s4">2</span><span class="s3">) + </span><span class="s2">'%'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-opt-rate'</span><span class="s3">).textContent = </span><span class="s2">'1 in ' </span><span class="s3">+ Math.round(</span><span class="s4">1</span><span class="s3">/res.maxEff).toLocaleString();</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'r-base-rate'</span><span class="s3">).textContent = </span><span class="s2">'1 in ' </span><span class="s3">+ Math.round(</span><span class="s4">1</span><span class="s3">/res.baselineEff).toLocaleString();</span>
 
-  const pBar = document.getElementById('progress-bar');
-  pBar.style.width = Math.min(res.pct, 100).toFixed(1) + '%';
-  document.getElementById('prog-label').textContent = res.pct.toFixed(1) + '%';
+  <span class="s6">const </span><span class="s3">pBar = document.getElementById(</span><span class="s2">'progress-bar'</span><span class="s3">);</span>
+  <span class="s3">pBar.style.width = Math.min(res.pct, </span><span class="s4">100</span><span class="s3">).toFixed(</span><span class="s4">1</span><span class="s3">) + </span><span class="s2">'%'</span><span class="s3">;</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'prog-label'</span><span class="s3">).textContent = res.pct.toFixed(</span><span class="s4">1</span><span class="s3">) + </span><span class="s2">'%'</span><span class="s3">;</span>
 
-  buildAdvice(drop, res, mf);
-  buildStrategy(drop, res, mf, pity);
+  <span class="s3">buildAdvice(drop, res, mf);</span>
+  <span class="s3">buildStrategy(drop, res, mf, pity);</span>
 
-  if (currentTab === 'curve') renderChart(res);
-  window._lastRes = res;
-}
+  <span class="s6">if </span><span class="s3">(currentTab === </span><span class="s2">'curve'</span><span class="s3">) renderChart(res);</span>
+  <span class="s3">window._lastRes = res;</span>
+<span class="s3">}</span>
 
-function buildAdvice(drop, res, mf) {
-  const box = document.getElementById('advice-box');
-  const txt = document.getElementById('advice-text');
-  let msg = '';
-  const pct = res.pct;
+<span class="s6">function </span><span class="s3">buildAdvice(drop, res, mf) {</span>
+  <span class="s6">const </span><span class="s3">box = document.getElementById(</span><span class="s2">'advice-box'</span><span class="s3">);</span>
+  <span class="s6">const </span><span class="s3">txt = document.getElementById(</span><span class="s2">'advice-text'</span><span class="s3">);</span>
+  <span class="s6">let </span><span class="s3">msg = </span><span class="s2">''</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">pct = res.pct;</span>
 
-  if (res.bestL === 0) {
-    msg = `For <strong>${drop.name}</strong>, the optimal strategy is to <strong>never turn the meter ON</strong> (L*=0). This happens because XP per run is high and the marginal gain from the meter does not offset the reset risk. Let it accumulate and use the pity guarantee.`;
-    box.className = 'warn-card';
-  } else if (pct <= 40) {
-    msg = `Keep the meter ON only for the <strong>first ${res.bestL} runs (${pct.toFixed(0)}% of the meter)</strong>, then turn it off. Early meter boosts drop chance without risking much accumulated progress.`;
-    box.className = 'advice-box';
-  } else if (pct <= 70) {
-    msg = `The sweet spot is at <strong>${pct.toFixed(0)}% of the meter (${res.bestL} runs)</strong>. Keep the meter ON normally and turn it off when you reach this point. This gives <strong>+${res.gain.toFixed(1)}%</strong> more drops compared to leaving it always off.`;
-    box.className = 'advice-box';
-  } else {
-    msg = `With your Magic Find of <strong>${mf}</strong>, the meter is worth keeping ON until <strong>${pct.toFixed(0)}%</strong>. High MF shifts the sweet spot later because the per-run chance boost compensates more for resets.`;
-    box.className = 'advice-box';
-  }
-  txt.innerHTML = msg;
-}
+  <span class="s6">if </span><span class="s3">(res.bestL === </span><span class="s4">0</span><span class="s3">) {</span>
+    <span class="s3">msg = </span><span class="s2">`For &lt;strong&gt;</span><span class="s3">${drop.name}</span><span class="s2">&lt;/strong&gt;, the optimal strategy is to &lt;strong&gt;never turn the meter ON&lt;/strong&gt; (L*=0). This happens because XP per run is high and the marginal gain from the meter does not offset the reset risk. Let it accumulate and use the pity guarantee.`</span><span class="s3">;</span>
+    <span class="s3">box.className = </span><span class="s2">'warn-card'</span><span class="s3">;</span>
+  <span class="s3">} </span><span class="s6">else if </span><span class="s3">(pct &lt;= </span><span class="s4">40</span><span class="s3">) {</span>
+    <span class="s3">msg = </span><span class="s2">`Keep the meter ON only for the &lt;strong&gt;first </span><span class="s3">${res.bestL} </span><span class="s2">runs (</span><span class="s3">${pct.toFixed(</span><span class="s4">0</span><span class="s3">)}</span><span class="s2">% of the meter)&lt;/strong&gt;, then turn it off. Early meter boosts drop chance without risking much accumulated progress.`</span><span class="s3">;</span>
+    <span class="s3">box.className = </span><span class="s2">'advice-box'</span><span class="s3">;</span>
+  <span class="s3">} </span><span class="s6">else if </span><span class="s3">(pct &lt;= </span><span class="s4">70</span><span class="s3">) {</span>
+    <span class="s3">msg = </span><span class="s2">`The sweet spot is at &lt;strong&gt;</span><span class="s3">${pct.toFixed(</span><span class="s4">0</span><span class="s3">)}</span><span class="s2">% of the meter (</span><span class="s3">${res.bestL} </span><span class="s2">runs)&lt;/strong&gt;. Keep the meter ON normally and turn it off when you reach this point. This gives &lt;strong&gt;+</span><span class="s3">${res.gain.toFixed(</span><span class="s4">1</span><span class="s3">)}</span><span class="s2">%&lt;/strong&gt; more drops compared to leaving it always off.`</span><span class="s3">;</span>
+    <span class="s3">box.className = </span><span class="s2">'advice-box'</span><span class="s3">;</span>
+  <span class="s3">} </span><span class="s6">else </span><span class="s3">{</span>
+    <span class="s3">msg = </span><span class="s2">`With your Magic Find of &lt;strong&gt;</span><span class="s3">${mf}</span><span class="s2">&lt;/strong&gt;, the meter is worth keeping ON until &lt;strong&gt;</span><span class="s3">${pct.toFixed(</span><span class="s4">0</span><span class="s3">)}</span><span class="s2">%&lt;/strong&gt;. High MF shifts the sweet spot later because the per-run chance boost compensates more for resets.`</span><span class="s3">;</span>
+    <span class="s3">box.className = </span><span class="s2">'advice-box'</span><span class="s3">;</span>
+  <span class="s3">}</span>
+  <span class="s3">txt.innerHTML = msg;</span>
+<span class="s3">}</span>
 
-function buildStrategy(drop, res, mf, pity) {
-  const el = document.getElementById('strategy-content');
-  const isRare = res.baseChanceNoMF < 0.005;
-  const mfImpact = mf > 0 && res.baseChanceNoMF < 0.05;
-  const bigGain = res.gain > 3;
+<span class="s6">function </span><span class="s3">buildStrategy(drop, res, mf, pity) {</span>
+  <span class="s6">const </span><span class="s3">el = document.getElementById(</span><span class="s2">'strategy-content'</span><span class="s3">);</span>
+  <span class="s6">const </span><span class="s3">isRare = res.baseChanceNoMF &lt; </span><span class="s4">0.005</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">mfImpact = mf &gt; </span><span class="s4">0 </span><span class="s3">&amp;&amp; res.baseChanceNoMF &lt; </span><span class="s4">0.05</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">bigGain = res.gain &gt; </span><span class="s4">3</span><span class="s3">;</span>
 
-  el.innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="metric-card">
-        <div class="metric-label" style="margin-bottom:8px">How Magic Find affects the strategy</div>
-        <p style="font-size:13px;color:var(--color-text-secondary);line-height:1.7">
-          MF only applies when the item's final drop chance is <strong style="color:var(--color-text-primary)">below 5%</strong>.
-          For ${drop.name} (base ~${(res.baseChanceNoMF*100).toFixed(3)}%), MF ${mfImpact ? '<strong style="color:var(--color-text-success)">applies</strong>' : '<strong style="color:var(--color-text-danger)">does not apply</strong>'}.
-          With MF ${mf}, the multiplier is <strong style="color:var(--color-text-primary)">${(1+mf/100).toFixed(2)}x</strong> over the base weight.
-          Higher MF shifts the sweet spot later because the per-run boost compensates more, reducing the cost of an accidental reset.
-        </p>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label" style="margin-bottom:8px">Weight boost vs. direct chance increase</div>
-        <p style="font-size:13px;color:var(--color-text-secondary);line-height:1.7">
-          The RNG Meter <strong style="color:var(--color-text-primary)">increases the item's weight</strong> (up to 3x), not the drop chance directly.
-          This means the total loot pool grows, slightly reducing the chance of other drops.
-          The real formula is: <code style="font-size:12px;background:var(--color-background-secondary);padding:1px 4px;border-radius:3px">p_L = boostedWeight / (poolTotal - baseWeight + boostedWeight)</code>.
-          For very rare items (small weight), the difference between +weight and +chance is negligible, but for common items it can exceed 5%.
-        </p>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label" style="margin-bottom:8px">Strategic conclusion</div>
-        <p style="font-size:13px;color:var(--color-text-secondary);line-height:1.7">
-          ${bigGain
-            ? `The gain of <strong style="color:var(--color-text-success)">+${res.gain.toFixed(1)}%</strong> is significant for ${drop.name}. Using the sweet spot strategy is worthwhile.`
-            : `The gain of <strong style="color:var(--color-text-primary)">+${res.gain.toFixed(1)}%</strong> is small. The practical difference over long sessions is marginal.`}
-          ${res.bestL === 0
-            ? ' In this specific case: <strong style="color:var(--color-text-warning)">never turn the meter ON</strong> — let XP accumulate and collect the pity guarantee.'
-            : ` Recommended strategy: <strong style="color:var(--color-text-primary)">keep meter ON for the first ${res.bestL} runs (${res.pct.toFixed(0)}%)</strong>, then turn it off and run without meter.`}
-          Aatrox ${aatrox ? 'active (+25% XP)' : 'inactive'} → ${res.xpPerRun.toFixed(0)} XP/run → pity in ${res.m} runs.
-          ${pity > 0 ? `Pity attribute level ${pity} (+${pity}% XP) reduces the number of runs to pity.` : ''}
-        </p>
-      </div>
-    </div>`;
-}
+  <span class="s3">el.innerHTML = </span><span class="s2">`</span>
+    <span class="s2">&lt;div style=&quot;display:flex;flex-direction:column;gap:12px&quot;&gt; 
+      &lt;div class=&quot;metric-card&quot;&gt; 
+        &lt;div class=&quot;metric-label&quot; style=&quot;margin-bottom:8px&quot;&gt;How Magic Find affects the strategy&lt;/div&gt; 
+        &lt;p style=&quot;font-size:13px;color:var(--color-text-secondary);line-height:1.7&quot;&gt; 
+          MF only applies when the item's final drop chance is &lt;strong style=&quot;color:var(--color-text-primary)&quot;&gt;below 5%&lt;/strong&gt;. 
+          For </span><span class="s3">${drop.name} </span><span class="s2">(base ~</span><span class="s3">${(res.baseChanceNoMF*</span><span class="s4">100</span><span class="s3">).toFixed(</span><span class="s4">3</span><span class="s3">)}</span><span class="s2">%), MF </span><span class="s3">${mfImpact ? </span><span class="s2">'&lt;strong style=&quot;color:var(--color-text-success)&quot;&gt;applies&lt;/strong&gt;' </span><span class="s3">: </span><span class="s2">'&lt;strong style=&quot;color:var(--color-text-danger)&quot;&gt;does not apply&lt;/strong&gt;'</span><span class="s3">}</span><span class="s2">. 
+          With MF </span><span class="s3">${mf}</span><span class="s2">, the multiplier is &lt;strong style=&quot;color:var(--color-text-primary)&quot;&gt;</span><span class="s3">${(</span><span class="s4">1</span><span class="s3">+mf/</span><span class="s4">100</span><span class="s3">).toFixed(</span><span class="s4">2</span><span class="s3">)}</span><span class="s2">x&lt;/strong&gt; over the base weight. 
+          Higher MF shifts the sweet spot later because the per-run boost compensates more, reducing the cost of an accidental reset. 
+        &lt;/p&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;metric-card&quot;&gt; 
+        &lt;div class=&quot;metric-label&quot; style=&quot;margin-bottom:8px&quot;&gt;Weight boost vs. direct chance increase&lt;/div&gt; 
+        &lt;p style=&quot;font-size:13px;color:var(--color-text-secondary);line-height:1.7&quot;&gt; 
+          The RNG Meter &lt;strong style=&quot;color:var(--color-text-primary)&quot;&gt;increases the item's weight&lt;/strong&gt; (up to 3x), not the drop chance directly. 
+          This means the total loot pool grows, slightly reducing the chance of other drops. 
+          The real formula is: &lt;code style=&quot;font-size:12px;background:var(--color-background-secondary);padding:1px 4px;border-radius:3px&quot;&gt;p_L = boostedWeight / (poolTotal - baseWeight + boostedWeight)&lt;/code&gt;. 
+          For very rare items (small weight), the difference between +weight and +chance is negligible, but for common items it can exceed 5%. 
+        &lt;/p&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;metric-card&quot;&gt; 
+        &lt;div class=&quot;metric-label&quot; style=&quot;margin-bottom:8px&quot;&gt;Strategic conclusion&lt;/div&gt; 
+        &lt;p style=&quot;font-size:13px;color:var(--color-text-secondary);line-height:1.7&quot;&gt; 
+          </span><span class="s3">${bigGain</span>
+            <span class="s3">? </span><span class="s2">`The gain of &lt;strong style=&quot;color:var(--color-text-success)&quot;&gt;+</span><span class="s3">${res.gain.toFixed(</span><span class="s4">1</span><span class="s3">)}</span><span class="s2">%&lt;/strong&gt; is significant for </span><span class="s3">${drop.name}</span><span class="s2">. Using the sweet spot strategy is worthwhile.`</span>
+            <span class="s3">: </span><span class="s2">`The gain of &lt;strong style=&quot;color:var(--color-text-primary)&quot;&gt;+</span><span class="s3">${res.gain.toFixed(</span><span class="s4">1</span><span class="s3">)}</span><span class="s2">%&lt;/strong&gt; is small. The practical difference over long sessions is marginal.`</span><span class="s3">}</span>
+          <span class="s3">${res.bestL === </span><span class="s4">0</span>
+            <span class="s3">? </span><span class="s2">' In this specific case: &lt;strong style=&quot;color:var(--color-text-warning)&quot;&gt;never turn the meter ON&lt;/strong&gt; — let XP accumulate and collect the pity guarantee.'</span>
+            <span class="s3">: </span><span class="s2">` Recommended strategy: &lt;strong style=&quot;color:var(--color-text-primary)&quot;&gt;keep meter ON for the first </span><span class="s3">${res.bestL} </span><span class="s2">runs (</span><span class="s3">${res.pct.toFixed(</span><span class="s4">0</span><span class="s3">)}</span><span class="s2">%)&lt;/strong&gt;, then turn it off and run without meter.`</span><span class="s3">}</span>
+          <span class="s2">Aatrox </span><span class="s3">${aatrox ? </span><span class="s2">'active (+25% XP)' </span><span class="s3">: </span><span class="s2">'inactive'</span><span class="s3">} </span><span class="s2">→ </span><span class="s3">${res.xpPerRun.toFixed(</span><span class="s4">0</span><span class="s3">)} </span><span class="s2">XP/run → pity in </span><span class="s3">${res.m} </span><span class="s2">runs. 
+          </span><span class="s3">${pity &gt; </span><span class="s4">0 </span><span class="s3">? </span><span class="s2">`Pity attribute level </span><span class="s3">${pity} </span><span class="s2">(+</span><span class="s3">${pity}</span><span class="s2">% XP) reduces the number of runs to pity.` </span><span class="s3">: </span><span class="s2">''</span><span class="s3">}</span>
+        <span class="s2">&lt;/p&gt; 
+      &lt;/div&gt; 
+    &lt;/div&gt;`</span><span class="s3">;</span>
+<span class="s3">}</span>
 
-function renderChart(res) {
-  res = res || window._lastRes;
-  if (!res) return;
-  const labels = res.effByL.map(x => x.L);
-  const vals = res.effByL.map(x => (1/x.eff).toFixed(1));
-  const colors = res.effByL.map(x => x.L === res.bestL ? '#E24B4A' : '#1D9E75');
+<span class="s6">function </span><span class="s3">renderChart(res) {</span>
+  <span class="s3">res = res || window._lastRes;</span>
+  <span class="s6">if </span><span class="s3">(!res) </span><span class="s6">return</span><span class="s3">;</span>
+  <span class="s6">const </span><span class="s3">labels = res.effByL.map(x =&gt; x.L);</span>
+  <span class="s6">const </span><span class="s3">vals = res.effByL.map(x =&gt; (</span><span class="s4">1</span><span class="s3">/x.eff).toFixed(</span><span class="s4">1</span><span class="s3">));</span>
+  <span class="s6">const </span><span class="s3">colors = res.effByL.map(x =&gt; x.L === res.bestL ? </span><span class="s2">'#E24B4A' </span><span class="s3">: </span><span class="s2">'#1D9E75'</span><span class="s3">);</span>
 
-  if (effChart) { effChart.destroy(); effChart = null; }
+  <span class="s6">if </span><span class="s3">(effChart) { effChart.destroy(); effChart = </span><span class="s6">null</span><span class="s3">; }</span>
 
-  const ctx = document.getElementById('eff-chart').getContext('2d');
-  effChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: '1 in N runs for drop',
-        data: res.effByL.map(x => parseFloat((1/x.eff).toFixed(1))),
-        borderColor: '#1D9E75',
-        backgroundColor: 'rgba(29,158,117,0.08)',
-        fill: true,
-        pointRadius: res.effByL.map(x => x.L === res.bestL ? 6 : 2),
-        pointBackgroundColor: colors,
-        pointBorderColor: colors,
-        tension: 0.3,
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: ctx => `1 in ${ctx.parsed.y} runs | ${((ctx.dataIndex/res.m)*100).toFixed(0)}% of meter`
-          }
-        }
-      },
-      scales: {
-        x: {
-          title: { display: true, text: 'Runs with meter ON (L)', color: '#888780', font: { size: 11 } },
-          ticks: { maxTicksLimit: 10, color: '#888780' },
-          grid: { color: 'rgba(136,135,128,0.15)' }
-        },
-        y: {
-          title: { display: true, text: '1 in N runs (lower = better)', color: '#888780', font: { size: 11 } },
-          ticks: { color: '#888780' },
-          grid: { color: 'rgba(136,135,128,0.15)' }
-        }
-      }
-    }
-  });
-}
+  <span class="s6">const </span><span class="s3">ctx = document.getElementById(</span><span class="s2">'eff-chart'</span><span class="s3">).getContext(</span><span class="s2">'2d'</span><span class="s3">);</span>
+  <span class="s3">effChart = </span><span class="s6">new </span><span class="s3">Chart(ctx, {</span>
+    <span class="s3">type: </span><span class="s2">'line'</span><span class="s3">,</span>
+    <span class="s3">data: {</span>
+      <span class="s3">labels,</span>
+      <span class="s3">datasets: [{</span>
+        <span class="s3">label: </span><span class="s2">'1 in N runs for drop'</span><span class="s3">,</span>
+        <span class="s3">data: res.effByL.map(x =&gt; parseFloat((</span><span class="s4">1</span><span class="s3">/x.eff).toFixed(</span><span class="s4">1</span><span class="s3">))),</span>
+        <span class="s3">borderColor: </span><span class="s2">'#1D9E75'</span><span class="s3">,</span>
+        <span class="s3">backgroundColor: </span><span class="s2">'rgba(29,158,117,0.08)'</span><span class="s3">,</span>
+        <span class="s3">fill: </span><span class="s6">true</span><span class="s3">,</span>
+        <span class="s3">pointRadius: res.effByL.map(x =&gt; x.L === res.bestL ? </span><span class="s4">6 </span><span class="s3">: </span><span class="s4">2</span><span class="s3">),</span>
+        <span class="s3">pointBackgroundColor: colors,</span>
+        <span class="s3">pointBorderColor: colors,</span>
+        <span class="s3">tension: </span><span class="s4">0.3</span><span class="s3">,</span>
+        <span class="s3">borderWidth: </span><span class="s4">2</span>
+      <span class="s3">}]</span>
+    <span class="s3">},</span>
+    <span class="s3">options: {</span>
+      <span class="s3">responsive: </span><span class="s6">true</span><span class="s3">, maintainAspectRatio: </span><span class="s6">false</span><span class="s3">,</span>
+      <span class="s3">plugins: {</span>
+        <span class="s3">legend: { display: </span><span class="s6">false </span><span class="s3">},</span>
+        <span class="s3">tooltip: {</span>
+          <span class="s3">callbacks: {</span>
+            <span class="s3">label: ctx =&gt; </span><span class="s2">`1 in </span><span class="s3">${ctx.parsed.y} </span><span class="s2">runs | </span><span class="s3">${((ctx.dataIndex/res.m)*</span><span class="s4">100</span><span class="s3">).toFixed(</span><span class="s4">0</span><span class="s3">)}</span><span class="s2">% of meter`</span>
+          <span class="s3">}</span>
+        <span class="s3">}</span>
+      <span class="s3">},</span>
+      <span class="s3">scales: {</span>
+        <span class="s3">x: {</span>
+          <span class="s3">title: { display: </span><span class="s6">true</span><span class="s3">, text: </span><span class="s2">'Runs with meter ON (L)'</span><span class="s3">, color: </span><span class="s2">'#888780'</span><span class="s3">, font: { size: </span><span class="s4">11 </span><span class="s3">} },</span>
+          <span class="s3">ticks: { maxTicksLimit: </span><span class="s4">10</span><span class="s3">, color: </span><span class="s2">'#888780' </span><span class="s3">},</span>
+          <span class="s3">grid: { color: </span><span class="s2">'rgba(136,135,128,0.15)' </span><span class="s3">}</span>
+        <span class="s3">},</span>
+        <span class="s3">y: {</span>
+          <span class="s3">title: { display: </span><span class="s6">true</span><span class="s3">, text: </span><span class="s2">'1 in N runs (lower = better)'</span><span class="s3">, color: </span><span class="s2">'#888780'</span><span class="s3">, font: { size: </span><span class="s4">11 </span><span class="s3">} },</span>
+          <span class="s3">ticks: { color: </span><span class="s2">'#888780' </span><span class="s3">},</span>
+          <span class="s3">grid: { color: </span><span class="s2">'rgba(136,135,128,0.15)' </span><span class="s3">}</span>
+        <span class="s3">}</span>
+      <span class="s3">}</span>
+    <span class="s3">}</span>
+  <span class="s3">});</span>
+<span class="s3">}</span>
 
-document.getElementById('sl-mf').addEventListener('input', function() {
-  document.getElementById('val-mf').textContent = this.value;
-  if (selectedDrop !== null) compute();
-});
-document.getElementById('sl-pity').addEventListener('input', function() {
-  document.getElementById('val-pity').textContent = this.value;
-  if (selectedDrop !== null) compute();
-});
+<span class="s3">document.getElementById(</span><span class="s2">'sl-mf'</span><span class="s3">).addEventListener(</span><span class="s2">'input'</span><span class="s3">, </span><span class="s6">function</span><span class="s3">() {</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'val-mf'</span><span class="s3">).textContent = </span><span class="s6">this</span><span class="s3">.value;</span>
+  <span class="s6">if </span><span class="s3">(selectedDrop !== </span><span class="s6">null</span><span class="s3">) compute();</span>
+<span class="s3">});</span>
+<span class="s3">document.getElementById(</span><span class="s2">'sl-pity'</span><span class="s3">).addEventListener(</span><span class="s2">'input'</span><span class="s3">, </span><span class="s6">function</span><span class="s3">() {</span>
+  <span class="s3">document.getElementById(</span><span class="s2">'val-pity'</span><span class="s3">).textContent = </span><span class="s6">this</span><span class="s3">.value;</span>
+  <span class="s6">if </span><span class="s3">(selectedDrop !== </span><span class="s6">null</span><span class="s3">) compute();</span>
+<span class="s3">});</span>
 
-initSelectors();
-</script>
+<span class="s3">initSelectors();</span>
+<span class="s0">&lt;/script&gt; </span><span class="s3"># shoutout to RTJ, VJ, Sof and MFS</span></pre>
+</body>
+</html>
