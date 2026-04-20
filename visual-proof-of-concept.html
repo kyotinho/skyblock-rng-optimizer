@@ -162,7 +162,7 @@ function compute() {
     `m − L* = <span class="highlight">${remainRuns} runs</span> restantes na fase OFF\n\n` +
     `Eff(L*) = [ 1 + S(L*)·(m−L*)·p ] / [ sumS + S(L*)·(m−L*+1) ]\n` +
     `        = [ 1 + ${SLstar.toFixed(3)}·${remainRuns}·${(pMF*100).toFixed(4)}% ] / [ ... ]\n` +
-    `        = 1 em ${(1/maxEff).toFixed(1)} runs`;
+    `        = 1 in ${(1/maxEff).toFixed(1)} runs`;
 
   document.getElementById('interp-box').innerHTML =
     bestL === 0
